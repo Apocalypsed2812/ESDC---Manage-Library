@@ -1,0 +1,71 @@
+
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	        </button>
+        </div>
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
+	  			<div class="user-logo">
+	  				<div class="img" style="background-image: url(/images/li.jpg);"></div>
+	  				<h3>Library Management</h3>
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+          <a href="/staff/home"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li>
+          <a href="/staff/book"><span class="fa fa-book mr-3"></span>Book</a>
+          </li>
+          <li>
+          <a href="/staff/loan"><span class="fa fa-address-card-o mr-3"></span>Loan</a>
+          </li>
+          <li>
+          <a href="/staff/statistic"><span class="fa fa-handshake-o mr-3"></span>Statistic</a>
+          </li>
+          <li>
+          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+    	</nav>
+
+        <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+		<div class="container">
+                <h1>Thống kê sách</h1>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <input type="number" placeholder="Year" id="year" class="mx-2 mb-5" style="width: 250px">
+                    </div>
+                    <div class="col-lg-4">
+                        <select id="month" class="mx-2 pb-1 pt-1 mb-5" style="width: 250px;">
+                            <option value="">----</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <button id="btn-view" class="mx-2 btn btn-primary" style="width: 250px;">View</button>
+                    </div>
+                </div>  
+                <div class="container d-flex">
+                    <div class="revenue align-center mx-1">
+        
+                    </div>
+                    <div id="chart">
+                    </div>
+                </div>
+        </div>        
+    </div>

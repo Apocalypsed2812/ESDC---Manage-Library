@@ -1,0 +1,59 @@
+<div class="banner" style="min-height: 100vh;">
+  <!-- buộc toàn bộ dòng và cột phải bỏ trong class container -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-5 col-xl-5 mt-5">
+        <div class="border p-3 rounded bg-light mb-5">
+          <h3 class="text-center text-success">Account Registration</h3>
+          <form method="post" action="/register">
+            <div class="d-flex">
+                <div class="form-group mx-2">
+                    <label for="">Username</label>
+                    <input value="" type="text" placeholder="Username" class="" name="username" required id="username">
+                </div>
+                <div class="form-group mx-2">
+                    <label for="">Full Name</label>
+                    <input value="" type="text" placeholder="Full name" name="name" required id="name">
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="form-group mx-2">
+                    <label for="">Password</label>
+                    <input value="" type="text" placeholder="Password" class="" name="password" required id="password">
+                </div>
+                <div class="form-group mx-2">
+                    <label for="">Password Confirm</label>
+                    <input value="" type="text" placeholder="Password Confirm" name="rePassword" required id="rePassword">
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="form-group mx-2">
+                    <label for="phone">Phone</label>
+                    <input value="" type="text" placeholder="Phone" class="" name="phone" required id="phone" style="padding-right: 0;">
+                </div>
+                <div class="form-group mx-2">
+                    <label for="email">Email</label>
+                    <input value="" type="text" placeholder="Email" class="" name="email" required id="email" style="padding-right: 0;">
+                </div>
+            </div>
+
+            {{#if error}}
+              <div class="form-group">
+                <div class="alert alert-danger alert-dismissible fade show">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{error}}
+                </div>
+            </div>
+            {{/if}}
+            <div class="form-group text-center">
+              <button class="btn btn-success px-5" type="submit">Register</button>
+            </div>
+            <div class="form-group">
+              <p>Already have an account? <a href="/login">Login now!</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+</div>

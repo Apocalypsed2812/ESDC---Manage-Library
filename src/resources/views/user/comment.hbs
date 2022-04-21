@@ -1,0 +1,137 @@
+
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	        </button>
+        </div>
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
+	  			<div class="user-logo">
+	  				<div class="img" style="background-image: url(/images/li.jpg);"></div>
+	  				<h3>Library Management</h3>
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+          <a href="/user/home"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li>
+          <a href="/user/book"><span class="fa fa-book mr-3"></span>Book</a>
+          </li>
+          <li>
+          <a href="/user/comment"><span class="fa fa-comment-o mr-3"></span> Comment</a>
+          </li>
+          <li>
+          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+    	</nav>
+
+        <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+              <h2 class="text-center mb-5">Trang bình luận</h2>
+              <div class="mb-5">
+                {{#if account}}
+                <button class="btn btn-success add-comment" data-username="{{account}}">Thêm bình luận</button>
+                {{/if}}
+              </div>
+              <div class="mb-5">
+                <p>Dưới đây là nhận xét và đánh giá của một vài người dùng hệ thống</p>
+              </div>
+                <div class="comment-block" style="min-height: 50vh;">
+                  {{#each data}}
+                  <div class="row">
+                    <div class="col-lg-1">
+                        <img src="/images/avatar2.png" class="rounded-circle" alt="Cinque Terre" style="max-width: 100%;">
+                    </div>
+                    <div class="col-lg-7">
+                        <div style="background-color: #F2F2F2; width: fit-content; border-radius: 16px;  padding-left: 3px; padding-right: 3px;">
+                          <p style="font-weight: bold; margin-bottom: 0;">{{username}}</p>
+                          <p>{{comment}}</p>
+                        </div>
+                    </div>
+                  </div>
+                  {{/each}}
+                </div> 
+               <div class="text-center" style="display: flex; justify-content:center; align-items: center">
+                  <ul class="pagination">
+                    {{{pagination_comment_user count page}}}
+                	</ul>   
+                </div>    
+    </div>
+
+    <div id="comment-dialog" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h3 class="modal-title">Bình luận</h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+                <p>Vui lòng nhập bình luận của bạn, cám ơn vì đã sử dụng hệ thống</p>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <textarea name="comment" id="comment" cols="60" rows="10"></textarea>
+                        
+                    </div>
+                    
+                </div>  
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button data-username="" id="btn-add-confirm" type="button" class="btn btn-success">Gửi</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script>
+    $('.add-comment').click(e => {
+      const btn = e.target
+      const username = btn.dataset.username
+
+      console.log(username)
+
+      $('#comment-dialog').modal('show')
+
+      $('#btn-add-confirm').attr('data-username', username)
+    })
+
+    $('#btn-add-confirm').click(e => {
+        $('#comment-dialog').modal('hide')
+        const btn = e.target
+        let username = btn.dataset.username
+
+        let comment = $('#comment').val();
+
+        console.log(username)
+        
+
+        fetch('/user/addComment', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'username='+ username + '&comment=' + comment,
+        })
+        .then(res => res.json())
+        .then(json => {
+            if(json.code === 0){
+                console.log("Thêm comment thành công")
+                window.location.href = '/user/comment'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+  </script>

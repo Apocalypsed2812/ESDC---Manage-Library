@@ -1,0 +1,227 @@
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	        </button>
+        </div>
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
+	  			<div class="user-logo">
+	  				<div class="img" style="background-image: url(/images/li.jpg);"></div>
+	  				<h3>Library Management</h3>
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+          <a href="/admin/home"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li>
+          <a href="/admin/member"><span class="fa fa-users mr-3"></span>Member</a>
+          </li>
+          <li>
+          <a href="/admin/book"><span class="fa fa-book mr-3"></span>Book</a>
+          </li>
+          <li>
+          <a href="/admin/staff"><span class="fa fa-handshake-o mr-3"></span>Staff</a>
+          </li>
+          <li>
+          <a href="/admin/comment"><span class="fa fa-comment-o mr-3"></span> Comment</a>
+          </li>
+          <li>
+          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+    	</nav>
+
+        <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="mb-4 text-center">Danh sách người dùng</h2>
+        <table cellpadding="10" cellspacing="10" border="0" style="border-collapse: collapse; margin: auto">
+          <tr class="control" style="text-align: left; font-weight: bold; font-size: 20px">
+          </tr>
+          <tr class="header">
+              <td>Name</td>
+              <td>SDT</td>
+              <td>Action</td>
+          </tr>
+          {{#each data}}
+          <tr class="item">
+              <td>{{name}}</td>
+              <td>{{phone}}</td>
+              <td><button class="btn btn-sm btn-outline-primary edit" data-id="{{_id}}" data-username="{{username}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button> | <button href="" class="btn btn-sm btn-outline-danger view" data-id="{{_id}}" data-username="{{username}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">View</button></td>
+          </tr>
+          {{/each}}
+  </table> 
+    </div>
+
+<div id="view-user" class="modal fade" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">View User</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input readonly value="" type="text" placeholder="Username" class="" name="username" required id="username-v">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Full Name</label>
+                                    <input readonly value="" type="text" placeholder="Full name" name="name" required id="name-v">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Phone</label>
+                                    <input readonly value="" type="text" placeholder="Phone" class="" name="phone" required id="phone-v" style="padding-right: 0;">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Email</label>
+                                    <input readonly value="" type="text" placeholder="Email" class="" name="email" required id="email-v" style="padding-right: 0;">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="edit-user" class="modal fade" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input value="" type="text" placeholder="Username" class="" name="username" required id="username-e">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Full Name</label>
+                                    <input value="" type="text" placeholder="Full name" name="name" required id="name-e">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Phone</label>
+                                    <input value="" type="text" placeholder="Phone" class="" name="phone" required id="phone-e" style="padding-right: 0;">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Email</label>
+                                    <input value="" type="text" placeholder="Email" class="" name="email" required id="email-e" style="padding-right: 0;">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div  type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                        <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script>
+    let views = document.querySelectorAll(".view")
+    views.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let username = item.getAttribute("data-username")
+            //let password = item.getAttribute("data-password")
+            let name = item.getAttribute("data-name")
+            //let identity = item.getAttribute("data-identity")
+            let phone = item.getAttribute("data-phone")
+            //let address = item.getAttribute("data-address")
+            //let sex = item.getAttribute("data-sex")
+            let email = item.getAttribute("data-email")
+            //let date = item.getAttribute("data-date")
+            
+            $('#username-v').val(username)
+            $('#name-v').val(name)
+            //$('#identity-v').val(identity)
+            $('#phone-v').val(phone)
+            //$('#address-v').val(address) 
+            //$('#sex-v').val(sex)
+            $('#email-v').val(email)
+            //$('#date-v').val(date)
+      
+            $('#view-user').modal('show')
+        }
+    })
+
+
+    let edits = document.querySelectorAll(".edit")
+    edits.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id_u = item.getAttribute("data-id")
+            let username_u = item.getAttribute("data-username")
+            //let password = item.getAttribute("data-password")
+            let name_u = item.getAttribute("data-name")
+            //let identity = item.getAttribute("data-identity")
+            let phone_u = item.getAttribute("data-phone")
+            //let address = item.getAttribute("data-address")
+            //let sex = item.getAttribute("data-sex")
+            let email_u = item.getAttribute("data-email")
+            //let date = item.getAttribute("data-date")
+            
+            $('#username-e').val(username_u)
+            $('#name-e').val(name_u)
+            //$('#identity-v').val(identity)
+            $('#phone-e').val(phone_u)
+            //$('#address-v').val(address) 
+            //$('#sex-v').val(sex)
+            $('#email-e').val(email_u)
+            //$('#date-v').val(date)
+
+            $('#btn-edit-confirm').attr('data-id', id_u)
+      
+            $('#edit-user').modal('show')
+        }
+    })
+
+    $('#btn-edit-confirm').click(e => {
+        $('#confirm-edit-dialog').modal('hide')
+        const btn = e.target
+        let id = btn.dataset.id
+
+        console.log(id)
+
+        let username = $('#username-e').val()
+        let name = $('#name-e').val()
+        //let identity = $('#identity-e').val()
+        let phone = $('#phone-e').val()
+        //let address = $('#address-e').val()
+        //let sex = $('#sex-e').val()
+        let email = $('#email-e').val()
+        
+        fetch('/admin/updateMember', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'username='+ username + '&name=' + name + '&phone=' 
+            + phone + '&email=' + email + '&id=' + id,
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            if(json.code === 0){
+                console.log("Cập nhật thành công thành công")
+                window.location.href = '/admin/member'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+</script>

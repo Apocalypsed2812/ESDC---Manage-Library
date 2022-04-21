@@ -1,0 +1,357 @@
+	
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	        </button>
+        </div>
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
+	  			<div class="user-logo">
+	  				<div class="img" style="background-image: url(/images/li.jpg);"></div>
+	  				<h3>Library Management</h3>
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+          <a href="/admin/home"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li>
+          <a href="/admin/member"><span class="fa fa-users mr-3"></span>Member</a>
+          </li>
+          <li>
+          <a href="/admin/book"><span class="fa fa-book mr-3"></span>Book</a>
+          </li>
+          <li>
+          <a href="/admin/staff"><span class="fa fa-handshake-o mr-3"></span>Staff</a>
+          </li>
+          <li>
+          <a href="/admin/comment"><span class="fa fa-comment-o mr-3"></span> Comment</a>
+          </li>
+          <li>
+          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+    	</nav>
+
+        <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="text-center">Quản lý nhân viên</h2>
+        <div class="container mt-4">
+            <div class="heading">Manage Staff <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-staff">Thêm</button>
+            </div>
+            <div class="staffs mt-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Full name</th>
+                            <th scope="col">Identity</th>
+                            <th scope="col">Sex</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Address</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each staff}}
+                        <tr>
+                            <th scope="row">{{username}}</th>
+                            <td>{{name}}</td>
+                            <td>{{identity}}</td>
+                            <td>{{sex}}</td>
+                            <td>{{phone}}</td>
+                            <td>{{email}}</td>
+                            <td>{{address}}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm edit" data-id="{{_id}}"
+                                data-username="{{username}}" data-name="{{name}}" data-identity="{{identity}}"
+                                data-sex="{{sex}}" data-phone="{{phone}}" data-email="{{email}}"
+                                data-address="{{address}}" data-password="{{password}}" data-date="{{date}}"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-success btn-sm view" data-username="{{username}}" data-name="{{name}}" data-identity="{{identity}}"
+                                data-sex="{{sex}}" data-phone="{{phone}}" data-email="{{email}}"
+                                data-address="{{address}}" data-password="{{password}}" data-date="{{date}}"><i class="fa fa-eye"></i></button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+    </div>
+
+    <div class="modal fade" id="modal-add-staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add new staff</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <form action="/admin/addstaff" method="post">
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input type="text" placeholder="Username" class="" name="username" required id="username">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Full name</label>
+                                    <input type="text" placeholder="Full name" name="name" required id="name">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Identity card number</label>
+                                    <input type="text" placeholder="Identity" class="" name="identity" required id="identity" style="padding-right: 0;">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Sex</label>
+                                    <select name="sex" required id="sex">
+                                        <option value="female">female</option>
+                                        <option value="male">male</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Phone number</label>
+                                    <input type="text" placeholder="Phone number" class="" name="phone" required id="phone">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Date of birth</label>
+                                    <input type="date" name="date" required id="date">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" placeholder="Email" required id="email">
+                                </div>
+                                <div class="form-group mx-5">
+                                    <label for="address">Address</label>
+                                    <input type="text" name="address" placeholder="Address" required id="address">
+                                </div>
+                            </div>
+                         
+                    </div>
+                    <div class="modal-footer">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+
+        <div id="view-staff" class="modal fade" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add new staff</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input readonly value="" type="text" placeholder="Username" class="" name="username" required id="username-v">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Full name</label>
+                                    <input readonly value="" type="text" placeholder="Full name" name="name" required id="name-v">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Identity card number</label>
+                                    <input readonly value="" type="text" placeholder="Identity" class="" name="identity" required id="identity-v" style="padding-right: 0;">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Sex</label>
+                                    <input readonly value="" type="text" placeholder="Sex" class="" name="sex" required id="sex-v" style="padding-right: 0;">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Phone number</label>
+                                    <input readonly value="" type="text" placeholder="Phone number" class="" name="phone" required id="phone-v">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Date of birth</label>
+                                    <input readonly type="text" name="dateofbirth" required id="date-v" value="">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="email">Email</label>
+                                    <input readonly value="" type="text" name="email" placeholder="Email" required id="email-v">
+                                </div>
+                                <div class="form-group mx-5">
+                                    <label for="address">Address</label>
+                                    <input readonly value="" type="text" name="address" placeholder="Address" required id="address-v">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="edit-staff" class="modal fade" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit staff</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input  value="" type="text" placeholder="Username" class="" name="username" required id="username-e">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Full name</label>
+                                    <input  value="" type="text" placeholder="Full name" name="name" required id="name-e">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Identity card number</label>
+                                    <input  value="" type="text" placeholder="Identity" class="" name="identity" required id="identity-e" style="padding-right: 0;">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Sex</label>
+                                    <input  value="" type="text" placeholder="Sex" class="" name="sex" required id="sex-e" style="padding-right: 0;">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Phone number</label>
+                                    <input  value="" type="text" placeholder="Phone number" class="" name="phone" required id="phone-e">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Date of birth</label>
+                                    <input  type="text" name="dateofbirth" required id="date-e" value="">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="email">Email</label>
+                                    <input  value="" type="text" name="email" placeholder="Email" required id="email-e">
+                                </div>
+                                <div class="form-group mx-5">
+                                    <label for="address">Address</label>
+                                    <input  value="" type="text" name="address" placeholder="Address" required id="address-e">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                        <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+    let views = document.querySelectorAll(".view")
+    views.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let username = item.getAttribute("data-username")
+            let password = item.getAttribute("data-password")
+            let name = item.getAttribute("data-name")
+            let identity = item.getAttribute("data-identity")
+            let phone = item.getAttribute("data-phone")
+            let address = item.getAttribute("data-address")
+            let sex = item.getAttribute("data-sex")
+            let email = item.getAttribute("data-email")
+            let date = item.getAttribute("data-date")
+            
+            $('#username-v').val(username)
+            $('#name-v').val(name)
+            $('#identity-v').val(identity)
+            $('#phone-v').val(phone)
+            $('#address-v').val(address)
+            $('#sex-v').val(sex)
+            $('#email-v').val(email)
+            $('#date-v').val(date)
+      
+            $('#view-staff').modal('show')
+        }
+    })
+
+    let edits = document.querySelectorAll(".edit")
+    edits.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let username_s = item.getAttribute('data-username')
+            let name_s = item.getAttribute("data-name")
+            let identity_s = item.getAttribute("data-identity")
+            let phone_s = item.getAttribute("data-phone")
+            let address_s = item.getAttribute("data-address")
+            let sex_s = item.getAttribute("data-sex")
+            let email_s = item.getAttribute('data-email')
+            let date_s = item.getAttribute("data-date")
+            let id_s = item.getAttribute('data-id')
+            
+            $('#username-e').val(username_s)
+            $('#name-e').val(name_s)
+            $('#identity-e').val(identity_s)
+            $('#phone-e').val(phone_s)
+            $('#address-e').val(address_s)
+            $('#sex-e').val(sex_s)
+            $('#email-e').val(email_s)
+            $('#date-e').val(date_s)
+      
+            $('#edit-staff').modal('show')
+
+            $('#btn-edit-confirm').attr('data-id', id_s)
+        }
+    })
+
+    $('#btn-edit-confirm').click(e => {
+        $('#confirm-edit-dialog').modal('hide')
+        const btn = e.target
+        let id = btn.dataset.id
+
+        let username = $('#username-e').val()
+        let name = $('#name-e').val()
+        let identity = $('#identity-e').val()
+        let phone = $('#phone-e').val()
+        let address = $('#address-e').val()
+        let sex = $('#sex-e').val()
+        let date = $('#date-e').val()
+        let email = $('#email-e').val()
+
+        console.log(id)
+
+        fetch('/admin/updateStaff', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'username='+ username + '&name=' + name + '&identity=' + identity + '&phone=' + 
+            phone + '&address=' + address + '&sex=' + sex + '&email=' + email + '&date=' + date + '&id=' + id,
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            if(json.code === 0){
+                console.log("Cập nhật thành công thành công")
+                window.location.href = '/admin/staff'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+</script>

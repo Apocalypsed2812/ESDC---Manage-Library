@@ -1,0 +1,358 @@
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+        <div class="custom-menu">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        </button>
+    </div>
+        <div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
+            <div class="user-logo">
+                <div class="img" style="background-image: url(/images/li.jpg);"></div>
+                <h3>Library Management</h3>
+            </div>
+        </div>
+    <ul class="list-unstyled components mb-5">
+        <li class="active">
+        <a href="/staff/home"><span class="fa fa-home mr-3"></span> Home</a>
+        </li>
+        <li>
+        <a href="/staff/book"><span class="fa fa-book mr-3"></span>Book</a>
+        </li>
+        <li>
+        <a href="/staff/loan"><span class="fa fa-address-card-o mr-3"></span>Loan</a>
+        </li>
+        <li>
+        <a href="/staff/statistic"><span class="fa fa-handshake-o mr-3"></span>Statistic</a>
+        </li>
+        <li>
+        <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+        </li>
+    </ul>
+
+    </nav>
+
+<div id="content" class="p-4 p-md-5 pt-5">
+    <div class="container" style="min-height: 100vh;">
+        <h2 class="text-success text-center">Quản lý phiếu mượn sách</h2>
+        <div class="">
+            <a class="btn btn-outline-primary" href="" data-toggle="modal" data-target="#modal-add-loan">Tạo phiếu mượn</a>
+        </div>
+        {{#each data}}
+        <div class="row mt-5" style="border: 1px dashed black;">
+            <div class="col-lg-2" style="display: flex; justify-content: center; align-items: center">
+                <a href="#" data-toggle="modal" data-target="#modal-change-status" style="color: gray"><i class="fa fa-address-card" aria-hidden="true" style="font-size: 50px;"></i></a>
+            </div>
+            <div class="col-lg-5 text-center pt-3">
+                <p>{{name}}</p>
+                <p>Sách cho mượn: {{book}}</p>
+            </div>
+            <div class="col-lg-2 text-center pt-3">
+                <p>Người muợn</p>
+                <p>{{username}}</p>
+            </div>
+            <div class="col-lg-3" style="display: flex; justify-content: right; align-items: center">
+                <button class="btn btn-outline-warning mr-3 view" data-name="{{name}}"
+                data-username="{{username}}" data-book="{{book}}" data-staff="{{staff}}"
+                data-dateb="{{dateb}}" data-dater="{{dater}}">View</button>
+                <button class="btn btn-outline-primary mx-2 edit" data-name="{{name}}"
+                data-username="{{username}}" data-book="{{book}}" data-staff="{{staff}}"
+                data-dateb="{{dateb}}" data-dater="{{dater}}" data-id="{{_id}}">Edit</button>
+            </div>
+        </div>
+        {{/each}}   
+    </div>
+    <div class="text-center mt-5" style="display: flex; justify-content: center; align-items: center">
+        <ul class="pagination text-center">
+        {{{pagination_loan_staff count page}}}
+        </ul>   
+    </div>    
+</div>
+
+<div class="modal fade" id="modal-add-loan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add new loan book</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <form action="/staff/addloan" method="post">
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input type="text" placeholder="Username" class="" name="username" required id="username">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Name</label>
+                                    <input type="text" placeholder="Full name" name="name" required id="name">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Name book</label>
+                                    <select name="book" id="book">
+                                        {{#each book}}
+                                            <option value="{{name}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Quantity</label>
+                                    <select name="quantity" id="quantity">
+                                        
+                                    </select>
+                                </div>
+                                 <div class="form-group mx-2">
+                                    <label for="">Name Staff</label>
+                                    <input type="text" placeholder="Staff" class="" name="staff" required id="staff" style="padding-right: 0;">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Date Borrow</label>
+                                    <input type="date" name="dateb" required id="dateb">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Date Return</label>
+                                    <input type="date" name="dater" required id="dater">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" value="" name="id_book" id="id_book">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+
+    <!-- Confirm delete -->
+<div id="modal-change-status" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Chuyển trạng thái</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Bạn có chắc rằng muốn chuyển trạng thái <strong id="delete-name"></strong>?
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button data-id= "???" id="btn-delete-confirm" type="button" class="btn btn-danger">Chuyển</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+<div id="view-loan" class="modal fade" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add new staff</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Name</label>
+                                    <input readonly value="" type="text" placeholder="Full name" name="name" required id="name-v">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input readonly value="" type="text" placeholder="Username" class="" name="username" required id="username-v">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Name book</label>
+                                    <input readonly value="" type="text" placeholder="Identity" class="" name="book" required id="book-v" style="padding-right: 0;">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Name staff</label>
+                                    <input readonly value="" type="text" placeholder="Sex" class="" name="staff" required id="staff-v" style="padding-right: 0;">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Date Borrow</label>
+                                    <input readonly value="" type="text" placeholder="Phone number" class="" name="dateb" required id="dateb-v">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Date Return</label>
+                                    <input readonly type="text" name="dater" required id="dater-v" value="">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="edit-loan" class="modal fade" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit staff</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex">
+                            <div class="form-group mx-2">
+                                <label for="">Name</label>
+                                <input value="" type="text" placeholder="Full name" name="name" required id="name-e">
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="">Username</label>
+                                <input value="" type="text" placeholder="Username" class="" name="username" required id="username-e">
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="form-group mx-2">
+                                <label for="">Name book</label>
+                                <input value="" type="text" placeholder="Identity" class="" name="book" required id="book-e" style="padding-right: 0;">
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="">Name staff</label>
+                                <input value="" type="text" placeholder="Sex" class="" name="staff" required id="staff-e" style="padding-right: 0;">
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="form-group mx-2">
+                                <label for="">Date Borrow</label>
+                                <input value="" type="text" placeholder="Phone number" class="" name="dateb" required id="dateb-e">
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="">Date Return</label>
+                                <input type="text" name="dater" required id="dater-e" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                        <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script>
+    let views = document.querySelectorAll(".view")
+    views.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let username = item.getAttribute("data-username")
+            let name = item.getAttribute("data-name")
+            let book = item.getAttribute("data-book")
+            let staff = item.getAttribute("data-staff")
+            let dateb = item.getAttribute("data-dateb")
+            let dater = item.getAttribute("data-dater")
+            
+            $('#username-v').val(username)
+            $('#name-v').val(name)
+            $('#book-v').val(book)
+            $('#staff-v').val(staff)
+            $('#dateb-v').val(dateb)
+            $('#dater-v').val(dater)
+            
+            $('#view-loan').modal('show')
+        }
+    })
+
+    let edits = document.querySelectorAll(".edit")
+    edits.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id_l = item.getAttribute("data-id")
+            let username_l = item.getAttribute("data-username")
+            let name_l = item.getAttribute("data-name")
+            let book_l = item.getAttribute("data-book")
+            let staff_l = item.getAttribute("data-staff")
+            let dateb_l = item.getAttribute("data-dateb")
+            let dater_l = item.getAttribute("data-dater")
+            
+            $('#username-e').val(username_l)
+            $('#name-e').val(name_l)
+            $('#book-e').val(book_l)
+            $('#staff-e').val(staff_l)
+            $('#dateb-e').val(dateb_l)
+            $('#dater-e').val(dater_l)
+            
+            $('#edit-loan').modal('show')
+            $('#btn-edit-confirm').attr('data-id', id_l)
+        }
+    })
+
+    $('#btn-edit-confirm').click(e => {
+        $('#confirm-edit-dialog').modal('hide')
+        const btn = e.target
+        let id = btn.dataset.id
+
+        let username = $('#username-e').val()
+        let name = $('#name-e').val()
+        let book = $('#book-e').val()
+        let staff = $('#staff-e').val()
+        let dateb = $('#dateb-e').val()
+        let dater = $('#dater-e').val()
+
+        fetch('/staff/updateLoan', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'id=' + id + '&username='+ username + '&name=' + name + '&book=' + book + '&staff=' + staff + '&dateb=' + dateb + '&dater=' + dater,
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            if(json.code === 0){
+                console.log("Cập nhật thành công")
+                window.location.href = '/staff/loan'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+
+    $('#book').change(()=>{
+        let name = $("#book").val()
+        fetch('http://localhost:3000/staff/changeQuantity', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body: 'name=' + name,
+        })
+        .then(res => res.json())
+        .then(json => {
+            //console.log(json.data[0].quantity)
+            //$('#quantity').val(json.data[0].quantity)
+            let quantity = document.getElementById('quantity')
+            let option = ''
+            for(let i = 1; i <= json.data[0].quantity; i++){
+                option += `<option value="${i}">${i}</option>`
+            }
+            quantity.innerHTML = option
+            //quantity.appendChild(option)
+            console.log(json.data[0]._id)
+            document.getElementById('id_book').value = json.data[0]._id
+        })
+        .catch(e => console.log(e))
+    })
+</script>
