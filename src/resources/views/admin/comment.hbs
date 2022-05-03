@@ -49,16 +49,6 @@
                                 <label for="">Comment</label>
                                 <input readonly value="" type="text"  class="form-control" placeholder="Comment" name="comment" required id="comment-v">
                             </div>
-                            <div class="d-flex">
-                                <div class="form-group mx-2">
-                                    <label for="">Phone</label>
-                                    <input readonly value="" type="text" placeholder="Phone" class="" name="phone" required id="phone-v" style="padding-right: 0;">
-                                </div>
-                                <div class="form-group mx-2">
-                                    <label for="">Email</label>
-                                    <input readonly value="" type="text" placeholder="Email" class="" name="email" required id="email-v" style="padding-right: 0;">
-                                </div>
-                            </div>
                     </div>
                     <div class="modal-footer">
                         <div type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</div>
@@ -159,7 +149,10 @@
         .then(json => {
             if(json.code === 0){
                 console.log("Xóa commnet thành công")
-                window.location.href = '/admin/comment'
+                showSuccessToast("Xóa bình luận thành công")
+                setTimeout(() => {
+                    window.location.href = '/admin/comment'
+                }, 1000)
             }
         })
         .catch(e => console.log(e))

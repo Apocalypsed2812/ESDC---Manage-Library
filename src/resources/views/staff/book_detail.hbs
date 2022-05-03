@@ -224,8 +224,11 @@
         .then(res => res.json())
         .then(json => {
             if(json.code === 0){
-                console.log("Cập nhật thành công thành công")
-                window.location.href = '/staff/book'
+                console.log("Cập nhật thành công")
+                showSuccessToast("Sửa sách thành công")
+                setTimeout(() => {
+                    window.location.href = '/staff/book'
+                },2000)
             }
         })
         .catch(e => console.log(e))
@@ -272,7 +275,10 @@
         .then(json => {
             if(json.code === 0){
                 console.log("Cập nhật thành công")
-                window.location.href = '/staff/book'
+                showSuccessToast("Chuyển trạng thái thành công")
+                setTimeout(() => {
+                    window.location.href = '/staff/book'
+                },2000)
             }
         })
         .catch(e => console.log(e))
@@ -296,7 +302,10 @@
         .then(json => {
             if(json.code === 0){
                 console.log("Cập nhật thành công")
-                window.location.href = '/staff/book'
+                showSuccessToast("Chuyển trạng thái thành công")
+                setTimeout(() => {
+                    window.location.href = '/staff/book'
+                },2000)
             }
         })
         .catch(e => console.log(e))

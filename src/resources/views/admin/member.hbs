@@ -159,7 +159,7 @@
     })
 
     $('#btn-edit-confirm').click(e => {
-        $('#confirm-edit-dialog').modal('hide')
+        $('#edit-user').modal('hide')
         const btn = e.target
         let id = btn.dataset.id
 
@@ -186,7 +186,10 @@
             console.log(json)
             if(json.code === 0){
                 console.log("Cập nhật thành công thành công")
-                window.location.href = '/admin/member'
+                showSuccessToast("Sửa thành công")
+                setTimeout(() => {
+                    window.location.href = '/admin/member'
+                }, 2000)
             }
         })
         .catch(e => console.log(e))

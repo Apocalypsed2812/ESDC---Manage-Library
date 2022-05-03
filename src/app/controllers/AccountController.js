@@ -132,6 +132,7 @@ class AccountController{
                 identity,
                 address,
                 credit,
+                status: 'Bình Thường',
             };
             const account = new Account(data);
             await account.save();

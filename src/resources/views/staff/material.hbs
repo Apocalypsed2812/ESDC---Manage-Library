@@ -267,7 +267,10 @@
         .then(json => {
             if(json.code === 0){
                 console.log("Cập nhật thành công")
-                window.location.href = '/staff/material'
+                showSuccessToast("Sửa tài liệu thành công")
+                setTimeout(() => {
+                    window.location.href = '/staff/material'
+                },2000)
             }
         })
         .catch(e => console.log(e))

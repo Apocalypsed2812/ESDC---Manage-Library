@@ -70,6 +70,10 @@ const helpers = {
 
     checkToast: () => {
         return 1
+    },
+
+    checkToastFailure: () => {
+        return 0
     }
 }
 module.exports = helpers

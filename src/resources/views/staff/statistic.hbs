@@ -69,16 +69,16 @@
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(41, 236, 140, 0.2)',
+                                'rgba(228, 122, 104, 0.2)',
+                                'rgba(228, 213, 11, 0.2)',
                             ],
                             borderColor: [
                                 'rgba(255, 99, 132, 1)',
                                 'rgba(54, 162, 235, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(54, 162, 235, 1)',
+                                'rgba(82, 236, 158, 1)',
+                                'rgba(233, 42, 36, 1)',
+                                'rgba(225, 165, 0, 1)',
                             ],
                             borderWidth: 1
                         }]
@@ -91,6 +91,12 @@
                         }
                     }
                 });
+            }
+            else if(json.code === 1){
+                showErrorToast("Năm không hợp lệ")
+                setTimeout(() => {
+                    window.location.href = '/staff/statistic'
+                }, 2000)
             }
         })
         .catch(e => console.log(e))

@@ -170,6 +170,8 @@ class StaffController {
 
     // [GET] /staff/loan
     async renderLoan(req, res){
+        const demoney = req.flash("demoney") || ''
+        const loansuccess = req.flash("loansuccess") || ''
         let PAGE_SKIP = 4
         let page = req.query.page || 0
         //console.log(page)
@@ -204,19 +206,25 @@ class StaffController {
                 book.push(item)
             }
         })
-        console.log(temp)
+        //console.log(temp)
 
-        let account = await Account
+        let accountList = await Account
                 .find({})
                 .lean()
+        let account = new Array()
+        accountList.forEach(item => {
+            if(item.status === 'Bình Thường'){
+                account.push(item)
+            }
+        })
         
-        res.render('./staff/loan', {data: temp, count, page, book, account})
+        res.render('./staff/loan', {data: temp, count, page, book, account, demoney, loansuccess})
     }
 
     // [POST] /staff/addloan
     async addLoan(req, res){
         let acc = req.account
-        let {username, name, dateb, dater, book1, book2, book3} = req.body;
+        let {username, name, dater, book1, book2, book3} = req.body;
         let staff = acc.username
         let id1 = req.body.id_book1
         let id2 = req.body.id_book2
@@ -230,6 +238,8 @@ class StaffController {
         let bookb = statistic.bookb
         let count = 0
 
+        let dateb = date.getFullYear() + "-" + month + "-" + date.getDay()
+
 
         let account = await Account.findOne({username})
         let credit_account = account.credit
@@ -237,6 +247,8 @@ class StaffController {
 
         if(credit_account < 20000){
             console.log('Không đủ tiền thế chân')
+            req.flash("demoney", "demoney")
+            res.redirect('/staff/loan')
             return
         }
         else{
@@ -418,7 +430,8 @@ class StaffController {
                 })
             }
             let credit = credit_account - 20000
-            Account.findByIdAndUpdate(id_account, {credit}, {
+            let status = 'Đã Mượn'
+            Account.findByIdAndUpdate(id_account, {credit, status}, {
                 new: true
             })
             .then(p => {
@@ -487,7 +500,7 @@ class StaffController {
         //req.session.user_id = account._id;
         }
 
-        
+        req.flash("loansuccess", "loansuccess")
         res.redirect("/staff/loan");
     }
 
@@ -659,7 +672,8 @@ class StaffController {
         })
 
         let credit = credit_account + 20000
-        Account.findByIdAndUpdate(id_account, {credit}, {
+        let status = 'Bình Thường'
+        Account.findByIdAndUpdate(id_account, {credit, status}, {
             new: true
         })
         .then(p => {
@@ -774,7 +788,8 @@ class StaffController {
         })
 
         let credit = credit_account + 20000
-        Account.findByIdAndUpdate(id_account, {credit}, {
+        let status = 'Bình Thường'
+        Account.findByIdAndUpdate(id_account, {credit, status}, {
             new: true
         })
         .then(p => {
@@ -868,7 +883,8 @@ class StaffController {
         })
 
         let credit = credit_account + 20000
-        Account.findByIdAndUpdate(id_account, {credit}, {
+        let status = 'Bình Thường'
+        Account.findByIdAndUpdate(id_account, {credit, status}, {
             new: true
         })
         .then(p => {
@@ -1008,7 +1024,8 @@ class StaffController {
         })
 
         let credit = credit_account + 10000
-        Account.findByIdAndUpdate(id_account, {credit}, {
+        let status = 'Bình Thường'
+        Account.findByIdAndUpdate(id_account, {credit, status}, {
             new: true
         })
         .then(p => {
@@ -1123,7 +1140,8 @@ class StaffController {
         })
 
         let credit = credit_account + 10000
-        Account.findByIdAndUpdate(id_account, {credit}, {
+        let status = 'Bình Thường'
+        Account.findByIdAndUpdate(id_account, {credit, status}, {
             new: true
         })
         .then(p => {
@@ -1217,7 +1235,8 @@ class StaffController {
         })
 
         let credit = credit_account + 10000
-        Account.findByIdAndUpdate(id_account, {credit}, {
+        let status = 'Bình Thường'
+        Account.findByIdAndUpdate(id_account, {credit, status}, {
             new: true
         })
         .then(p => {
@@ -1568,6 +1587,10 @@ class StaffController {
 
         let account = await Account.findById(id)
 
+        if(!account){
+            return res.json({code: 4, message: "Account không tồn tại"})
+        }
+
         console.log(account)
         
         let credit_account = account.credit
@@ -1637,7 +1660,11 @@ class StaffController {
         let statistic = await Statistic.find({year}).lean()
 
         // console.log("Dữ liệu theo năm")
-        // console.log(statistic)
+        //console.log(statistic.length)
+        if(statistic.length === 0){
+            return res.json({code: 1, message: 'Năm không hợp lệ'})
+        }
+
         let temp = new Array()
         statistic.forEach(item => {
             if(item.month === month){

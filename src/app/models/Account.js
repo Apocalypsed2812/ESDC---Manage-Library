@@ -11,6 +11,7 @@ const Account = new Schema({
     identity: { type: String },
     address: { type: String },
     credit: {type: Number},
+    status: {type: String},
 });
 
 module.exports = mongoose.model('Account', Account);

@@ -5,7 +5,7 @@
     <div id="content" class="p-4 p-md-5 pt-5">
         <h2 class="text-center">Quản lý nhân viên</h2>
         <div class="container mt-4">
-            <div class="heading">Manage Staff <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-staff">Thêm</button>
+            <div class="heading"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-staff">Thêm</button>
             </div>
             <div class="staffs mt-4">
                 <table class="table table-striped">
@@ -288,7 +288,7 @@
     })
 
     $('#btn-edit-confirm').click(e => {
-        $('#confirm-edit-dialog').modal('hide')
+        $('#edit-staff').modal('hide')
         const btn = e.target
         let id = btn.dataset.id
 
@@ -316,7 +316,10 @@
             console.log(json)
             if(json.code === 0){
                 console.log("Cập nhật thành công thành công")
-                window.location.href = '/admin/staff'
+                showSuccessToast("Sửa nhân viên thành công")
+                setTimeout(() => {
+                    window.location.href = '/admin/staff'
+                }, 2000)
             }
         })
         .catch(e => console.log(e))

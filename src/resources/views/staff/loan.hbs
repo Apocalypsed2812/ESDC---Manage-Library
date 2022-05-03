@@ -98,10 +98,6 @@
                             </div>
                             <div class="d-flex">
                                 <div class="form-group mx-2">
-                                    <label for="">Date Borrow</label>
-                                    <input type="date" name="dateb" required id="dateb">
-                                </div>
-                                <div class="form-group mx-2">
                                     <label for="">Date Return</label>
                                     <input type="date" name="dater" required id="dater">
                                 </div>
@@ -256,368 +252,393 @@
             </div>
         </div>
 
+        {{#if demoney}}
+            <input type="hidden" id="check_toast" value="{{checkToastFailure}}">
+        {{else if loansuccess}}
+            <input type="hidden" id="check_toast" value="{{checkToast}}">
+        {{/if}}
+
+    </div>
+
 <script>
-    let views = document.querySelectorAll(".view")
-    views.forEach(item => {
-        item.onclick = (e) => {
-            console.log(item)
-            let username = item.getAttribute("data-username")
-            let name = item.getAttribute("data-name")
-            let book = item.getAttribute("data-book")
-            let staff = item.getAttribute("data-staff")
-            let dateb = item.getAttribute("data-dateb")
-            let dater = item.getAttribute("data-dater")
+    window.onload = () => {
+        let views = document.querySelectorAll(".view")
+        views.forEach(item => {
+            item.onclick = (e) => {
+                console.log(item)
+                let username = item.getAttribute("data-username")
+                let name = item.getAttribute("data-name")
+                let book = item.getAttribute("data-book")
+                let staff = item.getAttribute("data-staff")
+                let dateb = item.getAttribute("data-dateb")
+                let dater = item.getAttribute("data-dater")
 
-            let books = book.split(",")
-            
-            $('#username-v').val(username)
-            $('#name-v').val(name)
-            $('#book-v1').val(books[0])
-            $('#book-v2').val(books[1])
-            $('#book-v3').val(books[2])
-            $('#staff-v').val(staff)
-            $('#dateb-v').val(dateb)
-            $('#dater-v').val(dater)
-            
-            $('#view-loan').modal('show')
-        }
-    })
-
-    let edits = document.querySelectorAll(".edit")
-    edits.forEach(item => {
-        item.onclick = (e) => {
-            console.log(item)
-            let id_l = item.getAttribute("data-id")
-            let username_l = item.getAttribute("data-username")
-            let name_l = item.getAttribute("data-name")
-            let book_l = item.getAttribute("data-book")
-            let staff_l = item.getAttribute("data-staff")
-            let dateb_l = item.getAttribute("data-dateb")
-            let dater_l = item.getAttribute("data-dater")
-            
-            $('#username-e').val(username_l)
-            $('#name-e').val(name_l)
-            $('#book-e').val(book_l)
-            $('#staff-e').val(staff_l)
-            $('#dateb-e').val(dateb_l)
-            $('#dater-e').val(dater_l)
-            
-            $('#edit-loan').modal('show')
-            $('#btn-edit-confirm').attr('data-id', id_l)
-        }
-    })
-
-    $('#btn-edit-confirm').click(e => {
-        $('#confirm-edit-dialog').modal('hide')
-        const btn = e.target
-        let id = btn.dataset.id
-
-        let username = $('#username-e').val()
-        let name = $('#name-e').val()
-        let book = $('#book-e').val()
-        let staff = $('#staff-e').val()
-        let dateb = $('#dateb-e').val()
-        let dater = $('#dater-e').val()
-
-        fetch('/staff/updateLoan', {
-            headers:{
-                'Content-Type':'application/x-www-form-urlencoded'
-            }, 
-            method: 'POST',
-            body:'id=' + id + '&username='+ username + '&name=' + name + '&book=' + book + '&staff=' + staff + '&dateb=' + dateb + '&dater=' + dater,
-        })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            if(json.code === 0){
-                console.log("Cập nhật thành công")
-                window.location.href = '/staff/loan'
+                let books = book.split(",")
+                
+                $('#username-v').val(username)
+                $('#name-v').val(name)
+                $('#book-v1').val(books[0])
+                $('#book-v2').val(books[1])
+                $('#book-v3').val(books[2])
+                $('#staff-v').val(staff)
+                $('#dateb-v').val(dateb)
+                $('#dater-v').val(dater)
+                
+                $('#view-loan').modal('show')
             }
         })
-        .catch(e => console.log(e))
-    })
 
-    $('#book1').change(()=>{
-        let name = $("#book1").val()
-        if(name === 'None'){
-            document.getElementById('id_book3').value = 'None'
-        }
-        else{
-            fetch('http://localhost:3000/staff/changeQuantity', {
-                headers:{
-                    'Content-Type':'application/x-www-form-urlencoded'
-                }, 
-                method: 'POST',
-                body: 'name=' + name,
-            })
-            .then(res => res.json())
-            .then(json => {
-                console.log(json.data[0]._id)
-                document.getElementById('id_book1').value = json.data[0]._id
-            })
-            .catch(e => console.log(e))
-        }
-        
-    })
-
-    $('#book2').change(()=>{
-        let name = $("#book2").val()
-        if(name === 'None'){
-            document.getElementById('id_book2').value = 'None'
-        }
-        else{
-            fetch('http://localhost:3000/staff/changeQuantity', {
-                headers:{
-                    'Content-Type':'application/x-www-form-urlencoded'
-                }, 
-                method: 'POST',
-                body: 'name=' + name,
-            })
-            .then(res => res.json())
-            .then(json => {
-                console.log(json.data[0]._id)
-                document.getElementById('id_book2').value = json.data[0]._id
-            })
-            .catch(e => console.log(e))
+        let edits = document.querySelectorAll(".edit")
+        edits.forEach(item => {
+            item.onclick = (e) => {
+                console.log(item)
+                let id_l = item.getAttribute("data-id")
+                let username_l = item.getAttribute("data-username")
+                let name_l = item.getAttribute("data-name")
+                let book_l = item.getAttribute("data-book")
+                let staff_l = item.getAttribute("data-staff")
+                let dateb_l = item.getAttribute("data-dateb")
+                let dater_l = item.getAttribute("data-dater")
+                
+                $('#username-e').val(username_l)
+                $('#name-e').val(name_l)
+                $('#book-e').val(book_l)
+                $('#staff-e').val(staff_l)
+                $('#dateb-e').val(dateb_l)
+                $('#dater-e').val(dater_l)
+                
+                $('#edit-loan').modal('show')
+                $('#btn-edit-confirm').attr('data-id', id_l)
             }
-    })
+        })
 
-    $('#book3').change(()=>{
-        let name = $("#book3").val()
-        if(name === 'None'){
-            document.getElementById('id_book3').value = 'None'
-        }
-        else{
-            fetch('http://localhost:3000/staff/changeQuantity', {
+        $('#btn-edit-confirm').click(e => {
+            $('#edit-loan').modal('hide')
+            const btn = e.target
+            let id = btn.dataset.id
+
+            let username = $('#username-e').val()
+            let name = $('#name-e').val()
+            let book = $('#book-e').val()
+            let staff = $('#staff-e').val()
+            let dateb = $('#dateb-e').val()
+            let dater = $('#dater-e').val()
+
+            fetch('/staff/updateLoan', {
                 headers:{
                     'Content-Type':'application/x-www-form-urlencoded'
                 }, 
                 method: 'POST',
-                body: 'name=' + name,
-            })
-            .then(res => res.json())
-            .then(json => {
-                console.log(json.data[0]._id)
-                document.getElementById('id_book3').value = json.data[0]._id
-            })
-            .catch(e => console.log(e))
-        }
-    })
-
-    let changes = document.querySelectorAll("#btn-change")
-    changes.forEach(item => {
-        item.onclick = (e) => {
-            let id_c = item.getAttribute("data-id")
-            let book_c = item.getAttribute("data-book")
-            let username_c = item.getAttribute("data-username")
-
-            book_cs = book_c.split(",")
-            console.log(book_cs)
-            
-            $('.btn-finish').attr('data-id', id_c)
-            $('.btn-finish').attr('data-username', username_c)
-            $('.btn-late').attr('data-id', id_c)
-            $('.btn-late').attr('data-book', book_c)
-            $('.btn-late').attr('data-username', username_c)
-            $('.btn-finish').attr('data-book', book_c)
-
-            fetch('/staff/getIdBook', {
-                headers:{
-                    'Content-Type':'application/x-www-form-urlencoded'
-                }, 
-                method: 'POST',
-                body:'book='+ book_cs,
+                body:'id=' + id + '&username='+ username + '&name=' + name + '&book=' + book + '&staff=' + staff + '&dateb=' + dateb + '&dater=' + dater,
             })
             .then(res => res.json())
             .then(json => {
                 console.log(json)
                 if(json.code === 0){
-                    console.log("Lấy id sách thành công")
-                    //window.location.href = '/staff/loan'
-                    if(json.data.length === 3){
-                        document.getElementById('book1_id').value = json.data[0]._id
-                        document.getElementById('book2_id').value = json.data[1]._id
-                        document.getElementById('book3_id').value = json.data[2]._id
-                    }
-                    else if(json.data.length === 2){
-                        document.getElementById('book1_id').value = json.data[0]._id
-                        document.getElementById('book2_id').value = json.data[1]._id
-                        document.getElementById('book3_id').value = ""
-                    }
-                    else{
-                        document.getElementById('book1_id').value = json.data[0]._id
-                        document.getElementById('book2_id').value = ""
-                        document.getElementById('book3_id').value = ""
-                    }
+                    console.log("Cập nhật thành công")
+                    showSuccessToast("Sửa phiếu mượn thành công")
+                    setTimeout(() => {
+                        window.location.href = '/staff/loan'
+                    },2000)
                 }
             })
-        }
-    })
+            .catch(e => console.log(e))
+        })
 
-    let finish = document.querySelectorAll(".btn-finish")
-    finish.forEach(item => {
-        item.onclick = (e) => {
-            let id = item.getAttribute("data-id")
-            let book = item.getAttribute("data-book")
-            let username = item.getAttribute("data-username")
-
-            console.log(id)
-            console.log(book)
-
-            book_cs = book.split(",")
-            console.log(book_cs)
-
-            let arrayId = new Array()
-            if(document.getElementById('book1_id').value !== "")
-            {
-                arrayId.push(document.getElementById('book1_id').value)
-            }
-            if(document.getElementById('book2_id').value !== "")
-            {
-                arrayId.push(document.getElementById('book2_id').value)
-            }
-            if(document.getElementById('book3_id').value !== "")
-            {
-                arrayId.push(document.getElementById('book3_id').value)
-            }
-            
-            if(arrayId.length === 3){
-                fetch('/staff/changeStatusSuccess3book', {
-                    headers:{
-                        'Content-Type':'application/x-www-form-urlencoded'
-                    }, 
-                    method: 'POST',
-                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&id_book3=' + arrayId[2] + '&username=' + username, 
-                })
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    if(json.code === 0){
-                        console.log("Chuyển trạng thái thành công")
-                        window.location.href = '/staff/loan'
-                    }
-                })
-                .catch(e => console.log(e))
-            }
-            else if(arrayId.length === 2){
-                fetch('/staff/changeStatusSuccess2book', {
-                    headers:{
-                        'Content-Type':'application/x-www-form-urlencoded'
-                    }, 
-                    method: 'POST',
-                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&username=' + username, 
-                })
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    if(json.code === 0){
-                        console.log("Chuyển trạng thái thành công")
-                        window.location.href = '/staff/loan'
-                    }
-                })
-                .catch(e => console.log(e))
+        $('#book1').change(()=>{
+            let name = $("#book1").val()
+            if(name === 'None'){
+                document.getElementById('id_book3').value = 'None'
             }
             else{
-                fetch('/staff/changeStatusSuccess1book', {
+                fetch('http://localhost:3000/staff/changeQuantity', {
                     headers:{
                         'Content-Type':'application/x-www-form-urlencoded'
                     }, 
                     method: 'POST',
-                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&username=' + username, 
+                    body: 'name=' + name,
                 })
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
-                    if(json.code === 0){
-                        console.log("Chuyển trạng thái thành công")
-                        window.location.href = '/staff/loan'
-                    }
+                    console.log(json.data[0]._id)
+                    document.getElementById('id_book1').value = json.data[0]._id
                 })
                 .catch(e => console.log(e))
             }
             
-        }
-    }) 
+        })
 
-    let late = document.querySelectorAll(".btn-late")
-    late.forEach(item => {
-        item.onclick = (e) => {
-            let id = item.getAttribute("data-id")
-            let book = item.getAttribute("data-book")
-            let username = item.getAttribute("data-username")
-
-            book_cs = book.split(",")
-            console.log(book_cs)
-
-            let arrayId = new Array()
-            if(document.getElementById('book1_id').value !== "")
-            {
-                arrayId.push(document.getElementById('book1_id').value)
-            }
-            if(document.getElementById('book2_id').value !== "")
-            {
-                arrayId.push(document.getElementById('book2_id').value)
-            }
-            if(document.getElementById('book3_id').value !== "")
-            {
-                arrayId.push(document.getElementById('book3_id').value)
-            }
-            
-            if(arrayId.length === 3){
-                fetch('/staff/changeStatusLate3book', {
-                    headers:{
-                        'Content-Type':'application/x-www-form-urlencoded'
-                    }, 
-                    method: 'POST',
-                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&id_book3=' + arrayId[2] + '&username=' + username, 
-                })
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    if(json.code === 0){
-                        console.log("Chuyển trạng thái thành công")
-                        window.location.href = '/staff/loan'
-                    }
-                })
-                .catch(e => console.log(e))
-            }
-            else if(arrayId.length === 2){
-                fetch('/staff/changeStatusLate2book', {
-                    headers:{
-                        'Content-Type':'application/x-www-form-urlencoded'
-                    }, 
-                    method: 'POST',
-                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&username=' + username, 
-                })
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    if(json.code === 0){
-                        console.log("Chuyển trạng thái thành công")
-                        window.location.href = '/staff/loan'
-                    }
-                })
-                .catch(e => console.log(e))
+        $('#book2').change(()=>{
+            let name = $("#book2").val()
+            if(name === 'None'){
+                document.getElementById('id_book2').value = 'None'
             }
             else{
-                fetch('/staff/changeStatusLate1book', {
+                fetch('http://localhost:3000/staff/changeQuantity', {
                     headers:{
                         'Content-Type':'application/x-www-form-urlencoded'
                     }, 
                     method: 'POST',
-                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&username=' + username, 
+                    body: 'name=' + name,
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json.data[0]._id)
+                    document.getElementById('id_book2').value = json.data[0]._id
+                })
+                .catch(e => console.log(e))
+                }
+        })
+
+        $('#book3').change(()=>{
+            let name = $("#book3").val()
+            if(name === 'None'){
+                document.getElementById('id_book3').value = 'None'
+            }
+            else{
+                fetch('http://localhost:3000/staff/changeQuantity', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body: 'name=' + name,
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json.data[0]._id)
+                    document.getElementById('id_book3').value = json.data[0]._id
+                })
+                .catch(e => console.log(e))
+            }
+        })
+
+        let changes = document.querySelectorAll("#btn-change")
+        changes.forEach(item => {
+            item.onclick = (e) => {
+                let id_c = item.getAttribute("data-id")
+                let book_c = item.getAttribute("data-book")
+                let username_c = item.getAttribute("data-username")
+
+                book_cs = book_c.split(",")
+                console.log(book_cs)
+                
+                $('.btn-finish').attr('data-id', id_c)
+                $('.btn-finish').attr('data-username', username_c)
+                $('.btn-late').attr('data-id', id_c)
+                $('.btn-late').attr('data-book', book_c)
+                $('.btn-late').attr('data-username', username_c)
+                $('.btn-finish').attr('data-book', book_c)
+
+                fetch('/staff/getIdBook', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body:'book='+ book_cs,
                 })
                 .then(res => res.json())
                 .then(json => {
                     console.log(json)
                     if(json.code === 0){
-                        console.log("Chuyển trạng thái thành công")
-                        window.location.href = '/staff/loan'
+                        console.log("Lấy id sách thành công")
+                        //window.location.href = '/staff/loan'
+                        if(json.data.length === 3){
+                            document.getElementById('book1_id').value = json.data[0]._id
+                            document.getElementById('book2_id').value = json.data[1]._id
+                            document.getElementById('book3_id').value = json.data[2]._id
+                        }
+                        else if(json.data.length === 2){
+                            document.getElementById('book1_id').value = json.data[0]._id
+                            document.getElementById('book2_id').value = json.data[1]._id
+                            document.getElementById('book3_id').value = ""
+                        }
+                        else{
+                            document.getElementById('book1_id').value = json.data[0]._id
+                            document.getElementById('book2_id').value = ""
+                            document.getElementById('book3_id').value = ""
+                        }
                     }
                 })
-                .catch(e => console.log(e))
             }
+        })
+
+        let finish = document.querySelectorAll(".btn-finish")
+        finish.forEach(item => {
+            item.onclick = (e) => {
+                let id = item.getAttribute("data-id")
+                let book = item.getAttribute("data-book")
+                let username = item.getAttribute("data-username")
+
+                console.log(id)
+                console.log(book)
+
+                book_cs = book.split(",")
+                console.log(book_cs)
+
+                let arrayId = new Array()
+                if(document.getElementById('book1_id').value !== "")
+                {
+                    arrayId.push(document.getElementById('book1_id').value)
+                }
+                if(document.getElementById('book2_id').value !== "")
+                {
+                    arrayId.push(document.getElementById('book2_id').value)
+                }
+                if(document.getElementById('book3_id').value !== "")
+                {
+                    arrayId.push(document.getElementById('book3_id').value)
+                }
+                
+                if(arrayId.length === 3){
+                    fetch('/staff/changeStatusSuccess3book', {
+                        headers:{
+                            'Content-Type':'application/x-www-form-urlencoded'
+                        }, 
+                        method: 'POST',
+                        body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&id_book3=' + arrayId[2] + '&username=' + username, 
+                    })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json)
+                        if(json.code === 0){
+                            console.log("Chuyển trạng thái thành công")
+                            window.location.href = '/staff/loan'
+                        }
+                    })
+                    .catch(e => console.log(e))
+                }
+                else if(arrayId.length === 2){
+                    fetch('/staff/changeStatusSuccess2book', {
+                        headers:{
+                            'Content-Type':'application/x-www-form-urlencoded'
+                        }, 
+                        method: 'POST',
+                        body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&username=' + username, 
+                    })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json)
+                        if(json.code === 0){
+                            console.log("Chuyển trạng thái thành công")
+                            window.location.href = '/staff/loan'
+                        }
+                    })
+                    .catch(e => console.log(e))
+                }
+                else{
+                    fetch('/staff/changeStatusSuccess1book', {
+                        headers:{
+                            'Content-Type':'application/x-www-form-urlencoded'
+                        }, 
+                        method: 'POST',
+                        body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&username=' + username, 
+                    })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json)
+                        if(json.code === 0){
+                            console.log("Chuyển trạng thái thành công")
+                            window.location.href = '/staff/loan'
+                        }
+                    })
+                    .catch(e => console.log(e))
+                }
+                
+            }
+        }) 
+
+        let late = document.querySelectorAll(".btn-late")
+        late.forEach(item => {
+            item.onclick = (e) => {
+                let id = item.getAttribute("data-id")
+                let book = item.getAttribute("data-book")
+                let username = item.getAttribute("data-username")
+
+                book_cs = book.split(",")
+                console.log(book_cs)
+
+                let arrayId = new Array()
+                if(document.getElementById('book1_id').value !== "")
+                {
+                    arrayId.push(document.getElementById('book1_id').value)
+                }
+                if(document.getElementById('book2_id').value !== "")
+                {
+                    arrayId.push(document.getElementById('book2_id').value)
+                }
+                if(document.getElementById('book3_id').value !== "")
+                {
+                    arrayId.push(document.getElementById('book3_id').value)
+                }
+                
+                if(arrayId.length === 3){
+                    fetch('/staff/changeStatusLate3book', {
+                        headers:{
+                            'Content-Type':'application/x-www-form-urlencoded'
+                        }, 
+                        method: 'POST',
+                        body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&id_book3=' + arrayId[2] + '&username=' + username, 
+                    })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json)
+                        if(json.code === 0){
+                            console.log("Chuyển trạng thái thành công")
+                            window.location.href = '/staff/loan'
+                        }
+                    })
+                    .catch(e => console.log(e))
+                }
+                else if(arrayId.length === 2){
+                    fetch('/staff/changeStatusLate2book', {
+                        headers:{
+                            'Content-Type':'application/x-www-form-urlencoded'
+                        }, 
+                        method: 'POST',
+                        body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&username=' + username, 
+                    })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json)
+                        if(json.code === 0){
+                            console.log("Chuyển trạng thái thành công")
+                            window.location.href = '/staff/loan'
+                        }
+                    })
+                    .catch(e => console.log(e))
+                }
+                else{
+                    fetch('/staff/changeStatusLate1book', {
+                        headers:{
+                            'Content-Type':'application/x-www-form-urlencoded'
+                        }, 
+                        method: 'POST',
+                        body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&username=' + username, 
+                    })
+                    .then(res => res.json())
+                    .then(json => {
+                        console.log(json)
+                        if(json.code === 0){
+                            console.log("Chuyển trạng thái thành công")
+                            window.location.href = '/staff/loan'
+                        }
+                    })
+                    .catch(e => console.log(e))
+                }
+            }
+        }) 
+
+        let temp = document.getElementById("check_toast")
+        if(temp.value == 0){
+            showErrorToast('Không đủ tiền thế chân')
+            console.log('Show toast ok')
         }
-    }) 
+        else if(temp.value == 1){
+            showSuccessToast('Tạo phiếu mượn thành công')
+            console.log('Show toast ok')
+        }
+            
+    }
+    
 
 </script>
