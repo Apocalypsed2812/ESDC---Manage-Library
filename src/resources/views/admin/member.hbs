@@ -1,38 +1,5 @@
-		
-		<div class="wrapper d-flex align-items-stretch">
-			<nav id="sidebar">
-				<div class="custom-menu">
-					<button type="button" id="sidebarCollapse" class="btn btn-primary">
-	        </button>
-        </div>
-	  		<div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
-	  			<div class="user-logo">
-	  				<div class="img" style="background-image: url(/images/li.jpg);"></div>
-	  				<h3>Library Management</h3>
-	  			</div>
-	  		</div>
-        <ul class="list-unstyled components mb-5">
-          <li class="active">
-          <a href="/admin/home"><span class="fa fa-home mr-3"></span> Home</a>
-          </li>
-          <li>
-          <a href="/admin/member"><span class="fa fa-users mr-3"></span>Member</a>
-          </li>
-          <li>
-          <a href="/admin/book"><span class="fa fa-book mr-3"></span>Book</a>
-          </li>
-          <li>
-          <a href="/admin/staff"><span class="fa fa-handshake-o mr-3"></span>Staff</a>
-          </li>
-          <li>
-          <a href="/admin/comment"><span class="fa fa-comment-o mr-3"></span> Comment</a>
-          </li>
-          <li>
-          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
-          </li>
-        </ul>
 
-    	</nav>
+    {{> navbar_admin}}
 
         <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
@@ -49,7 +16,7 @@
           <tr class="item">
               <td>{{name}}</td>
               <td>{{phone}}</td>
-              <td><button class="btn btn-sm btn-outline-primary edit" data-id="{{_id}}" data-username="{{username}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button> | <button href="" class="btn btn-sm btn-outline-danger view" data-id="{{_id}}" data-username="{{username}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">View</button></td>
+              <td><button class="btn btn-sm btn-outline-primary edit" data-id="{{_id}}" data-username="{{username}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Sửa</button> | <button href="" class="btn btn-sm btn-outline-danger view" data-id="{{_id}}" data-username="{{username}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Xem</button></td>
           </tr>
           {{/each}}
   </table> 
@@ -59,7 +26,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">View User</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Xem Người Dùng</h5>
                         <div type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </div>
@@ -87,7 +54,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</div>
                     </div>
                 </div>
             </div>
@@ -97,7 +64,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh Sửa Người Dùng</h5>
                         <div type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </div>
@@ -125,8 +92,8 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <div  type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
-                        <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Edit</button>
+                        <div  type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</div>
+                        <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Sửa</button>
                     </div>
                 </div>
             </div>

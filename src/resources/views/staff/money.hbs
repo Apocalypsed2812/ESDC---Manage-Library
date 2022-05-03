@@ -1,0 +1,120 @@
+
+{{> navbar_staff}}
+
+<div id="content" class="p-4 p-md-5 pt-5">
+    <div class="container">
+        <h2 class="text-warning mb-5">Nạp Tiền Cho Người Dùng</h2>
+        <div class="row">
+            <form action="/staff/searchUser" method="POST">
+                <div class="col-lg-12">
+                    <input type="text" placeholder="Tìm kiếm người dùng" id="user" name="user" class="mx-2 mb-5" style="width: 250px">
+                    <button id="btn-search" class="btn btn-primary" style="width: 50px;" type="submit">Tìm</button>
+                </div>
+            </form>
+        </div>  
+    </div>
+    {{#if search}}
+        <table class="table table-hover border">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{search.username}}</td>
+                    <td>{{search.name}}</td>
+                    <td>{{search.email}}</td>
+                    <td>
+                        <button class="btn btn-outline-danger btn-money" data-id="{{search._id}}" data-username="{{search.username}}">Nạp</button>
+                    </td>
+                </tr>      
+            </tbody>
+        </table>
+    {{/if}}        
+</div>
+
+<div id="confirm-money-dialog" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Nạp Tiền Vào Tài Khoản</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+             <div class="form-group">
+                <label for="username">Username</label>
+                <input readonly value="" name="username" required class="form-control" type="text" placeholder="Name" id="username" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Chọn số tiền</label>
+                <select name="money" id="money" class="form-control">
+                    <option value="10000">10000</option>
+                    <option value="20000">20000</option>
+                    <option value="50000">50000</option>
+                    <option value="100000">100000</option>
+                    <option value="200000">200000</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button data-id = "???" type="button" class="btn btn-primary" id="btn-money-confirm">Nạp</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+    let moneys = document.querySelectorAll(".btn-money")
+    moneys.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id = item.getAttribute("data-id")
+            let username = item.getAttribute("data-username")
+        
+            $('#username').val(username)
+
+            $('#btn-money-confirm').attr('data-id', id)
+    
+            $('#confirm-money-dialog').modal('show')
+        }
+    })
+
+    $('#btn-money-confirm').click(e => {
+        $('#confirm-money-dialog').modal('hide')
+        const btn = e.target
+        let id = btn.dataset.id
+        
+        let money = $('#money').val()
+
+        console.log(id)
+        console.log(money)
+
+        fetch('/staff/updateMoney', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'id='+ id + '&money=' + money,
+        })
+        .then(res => res.json())
+        .then(json => {
+            if(json.code === 0){
+                console.log("Cập nhật thành công")
+                window.location.href = '/staff/money'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+
+</script>

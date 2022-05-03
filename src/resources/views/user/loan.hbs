@@ -1,0 +1,128 @@
+
+{{> navbar_user}}
+
+<div id="content" class="p-4 p-md-5 pt-5">
+    <div class="container" style="min-height: 100vh;">
+        <h2 class="text-successyhh
+         text-center">Phiếu Mượn Của Người Dùng</h2>
+        {{#if data}}
+            {{#each data}}
+            <div class="row mt-5" style="border: 1px dashed black;">
+                <div class="col-lg-2" style="display: flex; justify-content: center; align-items: center">
+                    Trạng Thái: 
+                    {{status}}
+                </div>
+                <div class="col-lg-5 text-center pt-3">
+                    <p>{{name}}</p>
+                    <p>Số sách cho mượn: {{book.length}}</p>
+                </div>
+                <div class="col-lg-2 text-center pt-3">
+                    <p>Người muợn</p>
+                    <p>{{username}}</p>
+                </div>
+                <div class="col-lg-3" style="display: flex; justify-content: right; align-items: center">
+                    <button class="btn btn-outline-warning mr-3 view" data-name="{{name}}"
+                    data-username="{{username}}" data-book="{{book}}" data-staff="{{staff}}"
+                    data-dateb="{{dateb}}" data-dater="{{dater}}">Xem</button>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <div class="text-center text-success mt-5" style="font-size: 30px;">Bạn chưa có phiếu mượn</div>
+        {{/if}}   
+    </div>
+    <div class="text-center mt-5" style="display: flex; justify-content: center; align-items: center">
+        <ul class="pagination text-center">
+        </ul>   
+    </div>    
+</div>
+
+<div id="view-loan" class="modal fade" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xem Phiếu Mượn</h5>
+                        <div type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Name</label>
+                                    <input readonly value="" type="text" placeholder="Full name" name="name" required id="name-v">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Username</label>
+                                    <input readonly value="" type="text" placeholder="Username" class="" name="username" required id="username-v">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Name book 1</label>
+                                    <input readonly value="" type="text" placeholder="None" class="" name="book" required id="book-v1" style="padding-right: 0;">
+                                </div>
+
+                                <div class="form-group mx-2">
+                                    <label for="">Name book 2</label>
+                                    <input readonly value="" type="text" placeholder="None" class="" name="book" required id="book-v2" style="padding-right: 0;">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Name book 3</label>
+                                    <input readonly value="" type="text" placeholder="None" class="" name="book" required id="book-v3" style="padding-right: 0;">
+                                </div>
+
+                                <div class="form-group mx-2">
+                                    <label for="">Name staff</label>
+                                    <input readonly value="" type="text" placeholder="Sex" class="" name="staff" required id="staff-v" style="padding-right: 0;">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Date Borrow</label>
+                                    <input readonly value="" type="text" placeholder="Phone number" class="" name="dateb" required id="dateb-v">
+                                </div>
+                                <div class="form-group mx-2">
+                                    <label for="">Date Return</label>
+                                    <input readonly type="text" name="dater" required id="dater-v" value="">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+<script>
+    let views = document.querySelectorAll(".view")
+    views.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let username = item.getAttribute("data-username")
+            let name = item.getAttribute("data-name")
+            let book = item.getAttribute("data-book")
+            let staff = item.getAttribute("data-staff")
+            let dateb = item.getAttribute("data-dateb")
+            let dater = item.getAttribute("data-dater")
+
+            let books = book.split(",")
+            
+            $('#username-v').val(username)
+            $('#name-v').val(name)
+            $('#book-v1').val(books[0])
+            $('#book-v2').val(books[1])
+            $('#book-v3').val(books[2])
+            $('#staff-v').val(staff)
+            $('#dateb-v').val(dateb)
+            $('#dater-v').val(dater)
+            
+            $('#view-loan').modal('show')
+        }
+    })
+
+</script>

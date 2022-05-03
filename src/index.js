@@ -9,6 +9,7 @@ app = express()
 const route = require('./routes')
 
 const db = require('./config/db');
+const email = require('./send_email.js')
 //const { devNull } = require('os');
 const helpers = require("./util/handlebars_helpers.js")
 const credentials = require('./config/credentials');
@@ -42,6 +43,9 @@ route(app);
 
 //Connect to db
 db.connect();
+
+//Send Email
+email.main();
 
 port = process.env.PORT || 3000
 

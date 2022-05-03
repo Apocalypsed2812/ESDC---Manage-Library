@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
       <div class="col-md-10 col-lg-5 col-xl-5 mt-5">
         <div class="border p-3 rounded bg-light mb-5">
-          <h3 class="text-center text-success">Account Registration</h3>
+          <h3 class="text-center text-success">Đăng Kí Tài Khoản</h3>
           <form method="post" action="/register">
             <div class="d-flex">
                 <div class="form-group mx-2">
@@ -37,6 +37,17 @@
                 </div>
             </div>
 
+            <div class="d-flex">
+                <div class="form-group mx-2">
+                    <label for="identity">Identity</label>
+                    <input value="" type="text" placeholder="Identity" class="" name="identity" required id="identity" style="padding-right: 0;">
+                </div>
+                <div class="form-group mx-2">
+                    <label for="address">Address</label>
+                    <input value="" type="text" placeholder="Address" class="" name="address" required id="address" style="padding-right: 0;">
+                </div>
+            </div>
+
             {{#if error}}
               <div class="form-group">
                 <div class="alert alert-danger alert-dismissible fade show">
@@ -46,10 +57,10 @@
             </div>
             {{/if}}
             <div class="form-group text-center">
-              <button class="btn btn-success px-5" type="submit">Register</button>
+              <button class="btn btn-success px-5" type="submit">Đăng Kí</button>
             </div>
             <div class="form-group">
-              <p>Already have an account? <a href="/login">Login now!</a></p>
+              <p>Bạn đã có tài khoản ? <a href="/login">Đăng Nhập Ngay</a></p>
             </div>
           </form>
         </div>

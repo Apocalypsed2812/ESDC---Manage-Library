@@ -1,0 +1,364 @@
+    
+    {{> navbar_staff}}
+    <style>
+        .fa,
+        .fas {
+            color: #858585;
+        }
+
+        .fa-folder {
+            color: rgb(74, 158, 255);
+        }
+
+        i.fa,
+        table i.fas {
+            font-size: 16px;
+            margin-right: 6px;
+        }
+
+        i.action {
+            cursor: pointer;
+        }
+
+        a {
+            color: black;
+        }
+    </style>
+<div id="content" class="p-4 p-md-5 pt-5">
+    <div class="container">
+        <div class="row py-3">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <h3>
+                    Quản Lý Tài Liệu
+                </h3>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+				<form class="form-inline" style="display: flex; justify-content: right" method="post" action="/staff/searchMaterialE">
+					<input name="materialE" class="" type="search" placeholder="Tìm kiếm tài liệu" style="border: 1px solid; margin-right: 10px; border-radius: 4px; width: 200px">
+					<button class="btn btn-primary" type="submit">Tìm</button>
+				</form>
+			</div>
+        </div>
+        <div class="btn-group my-3">
+            <a class="btn btn-light border" href="/staff/addMaterialE">
+                <i class="fa fa-file"></i> Thêm tài liệu
+            </a>
+        </div>
+        <table class="table table-hover border">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>File</th>
+                    <th>Actions</th>
+                    <th>Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#if search}}
+                    <tr>
+                        <a href="/staff/materialE" class="btn btn-outline-info">Quay lại danh sách tài liệu</a>
+                    </tr>
+                    <tr>
+                        <td>{{search.name}}</td>
+                        <td>{{search.quantity}}</td>
+                        <td><a href="/file/{{search.file}}">{{search.file}}</a></td>
+                        <td>
+                            <span><i class="fa fa-edit action btn-edit" data-id="{{search._id}}" data-name="{{search.name}}" data-quantity="{{search.quantity}}" data-description="{{search.description}}"></i></button>
+                            <span><i class="fa fa-eye action btn-view" data-id="{{search._id}}" data-name="{{search.name}}" data-quantity="{{search.quantity}}" data-description="{{search.description}}" data-image="{{search.image}}" data-file="{{search.file}}"></i></button>
+                        </td>
+                        <td>
+                            <a class="btn-image" data-id="{{search._id}}" style="color: blue;">Ảnh |</button>
+                            <a class="btn-file" data-id="{{search._id}}" style="color: blue;">File</button>
+                        </td>
+                    </tr>    
+                {{else}}
+                    {{#each data}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{quantity}}</td>
+                            <td><a href="/file/{{file}}">{{file}}</a></td>
+                            <td>
+                                <span><i class="fa fa-edit action btn-edit" data-id="{{_id}}" data-name="{{name}}" data-quantity="{{quantity}}" data-description="{{description}}"></i></button>
+                                <span><i class="fa fa-eye action btn-view" data-id="{{_id}}" data-name="{{name}}" data-quantity="{{quantity}}" data-description="{{description}}" data-image="{{image}}" data-file="{{file}}"></i></button>
+                            </td>
+                            <td>
+                            <a class="btn-image" data-id="{{_id}}" style="color: blue;">Ảnh |</button>
+                            <a class="btn-file" data-id="{{_id}}" style="color: blue;">File</button>
+                        </td>
+                        </tr>    
+                    {{/each}}
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- message dialog -->
+    <div class="modal fade" id="message-dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Xóa file</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Bạn không được cấp quyền để xóa tập tin/thư mục này</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-view-dialog" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Xem thông tin tài liệu</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+             <div class="form-group">
+                <label for="name">Tên tài liệu</label>
+                <input readonly value="" name="name" required class="form-control" type="text" placeholder="Name" id="name_v" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Số lượng</label>
+                <input readonly value="" name="quantity" required class="form-control" type="number" placeholder="Quantity" id="quantity_v" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Mô tả</label>
+                <input readonly value="" name="description" required class="form-control" type="text" placeholder="Quantity" id="description_v" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+            <div class="form-group">
+                <label for="image_e">Ảnh</label>
+                <input readonly value="" name="image_e" required class="form-control" type="text" placeholder="Quantity" id="image_v" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+            <div class="form-group">
+                <label for="file_e">File</label>
+                <input readonly value="" name="file_e" required class="form-control" type="text" placeholder="Quantity" id="file_v" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <div id="confirm-edit-dialog" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Cập nhật thông tin tài liệu</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+             <div class="form-group">
+                <label for="name">Tên tài liệu</label>
+                <input value="" name="name" required class="form-control" type="text" placeholder="Name" id="name_e" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Số lượng</label>
+                <input value="" name="quantity" required class="form-control" type="number" placeholder="Quantity" id="quantity_e" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Mô tả</label>
+                <input value="" name="description" required class="form-control" type="text" placeholder="Quantity" id="description_e" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Cập nhật</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirm-image-dialog" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <form action="/staff/bookImageMaterialE" method="POST" enctype="multipart/form-data">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Thay đổi ảnh tài liệu</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="image" class="">Ảnh minh họa</label>
+                <input value = "" type="file" class="form-control" required accept="image/*" id="image_e" name="image" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+           <input type="hidden" name="id" id="id">
+          <button type="submit" class="btn btn-success" id="btn-image-confirm">Đổi</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <div id="confirm-file-dialog" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <form action="/staff/bookFileMaterialE" method="POST" enctype="multipart/form-data">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Thay đổi file tài liệu</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="file" class="">File tài liệu</label>
+                <input value = "" type="file" class="form-control" required id="file_e" name="file" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+           <input type="hidden" name="id" id="id1">
+          <button type="submit" class="btn btn-success" id="btn-image-confirm">Đổi</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        let edits = document.querySelectorAll(".btn-edit")
+        edits.forEach(item => {
+            item.onclick = (e) => {
+                console.log(item)
+                let id_e = item.getAttribute("data-id")
+                let name_e = item.getAttribute("data-name")
+                let quantity_e = item.getAttribute("data-quantity")
+                let description_e = item.getAttribute("data-description")
+
+                console.log(name_e)
+                console.log(quantity_e)
+                console.log(description_e)
+
+            
+                $('#name_e').val(name_e)
+                $('#quantity_e').val(quantity_e)
+                $('#description_e').val(description_e)
+            
+
+                $('#btn-edit-confirm').attr('data-id', id_e)
+        
+                $('#confirm-edit-dialog').modal('show')
+            }
+        })
+
+    $('#btn-edit-confirm').click(e => {
+        $('#confirm-edit-dialog').modal('hide')
+        const btn = e.target
+        let id = btn.dataset.id
+        let name = $('#name_e').val()
+        let quantity = $('#quantity_e').val()
+        let description = $('#description_e').val()
+
+        console.log(id)
+        console.log(name)
+        console.log(quantity)
+        console.log(description)
+
+        fetch('/staff/updateMaterialE', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'id='+ id + '&name=' + name + '&quantity=' + quantity + '&description=' + description,
+        })
+        .then(res => res.json())
+        .then(json => {
+            if(json.code === 0){
+                console.log("Cập nhật thành công")
+                window.location.href = '/staff/materialE'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+
+    let views = document.querySelectorAll(".btn-view")
+        views.forEach(item => {
+            item.onclick = (e) => {
+                console.log(item)
+                let id_v = item.getAttribute("data-id")
+                let name_v = item.getAttribute("data-name")
+                let quantity_v = item.getAttribute("data-quantity")
+                let description_v = item.getAttribute("data-description")
+                let image_v = item.getAttribute("data-image")
+                let file_v = item.getAttribute("data-file")
+            
+                $('#name_v').val(name_v)
+                $('#quantity_v').val(quantity_v)
+                $('#description_v').val(description_v)
+                $('#image_v').val(image_v)
+                $('#file_v').val(file_v)
+            
+                $('#confirm-view-dialog').modal('show')
+            }
+        })
+
+    let images = document.querySelectorAll(".btn-image")
+    images.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id_i = item.getAttribute("data-id")
+
+            $('#id').val(id_i)
+    
+            $('#confirm-image-dialog').modal('show')
+        }
+    })
+
+    let files = document.querySelectorAll(".btn-file")
+    files.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id_f = item.getAttribute("data-id")
+
+            $('#id1').val(id_f)
+    
+            $('#confirm-file-dialog').modal('show')
+        }
+    })
+        
+    </script>
+</div>

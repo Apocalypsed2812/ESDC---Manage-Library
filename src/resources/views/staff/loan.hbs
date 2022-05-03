@@ -1,34 +1,5 @@
-<div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-        <div class="custom-menu">
-            <button type="button" id="sidebarCollapse" class="btn btn-primary">
-        </button>
-    </div>
-        <div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
-            <div class="user-logo">
-                <div class="img" style="background-image: url(/images/li.jpg);"></div>
-                <h3>Library Management</h3>
-            </div>
-        </div>
-    <ul class="list-unstyled components mb-5">
-        <li class="active">
-        <a href="/staff/home"><span class="fa fa-home mr-3"></span> Home</a>
-        </li>
-        <li>
-        <a href="/staff/book"><span class="fa fa-book mr-3"></span>Book</a>
-        </li>
-        <li>
-        <a href="/staff/loan"><span class="fa fa-address-card-o mr-3"></span>Loan</a>
-        </li>
-        <li>
-        <a href="/staff/statistic"><span class="fa fa-handshake-o mr-3"></span>Statistic</a>
-        </li>
-        <li>
-        <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
-        </li>
-    </ul>
 
-    </nav>
+{{> navbar_staff}}
 
 <div id="content" class="p-4 p-md-5 pt-5">
     <div class="container" style="min-height: 100vh;">
@@ -39,11 +10,13 @@
         {{#each data}}
         <div class="row mt-5" style="border: 1px dashed black;">
             <div class="col-lg-2" style="display: flex; justify-content: center; align-items: center">
-                <a href="#" data-toggle="modal" data-target="#modal-change-status" style="color: gray"><i class="fa fa-address-card" aria-hidden="true" style="font-size: 50px;"></i></a>
+                <a href="#" data-toggle="modal" data-target="#modal-change-status" style="color: gray" data-id="{{_id}}" data-name="{{name}}"
+                data-username="{{username}}" data-book="{{book}}" data-staff="{{staff}}"
+                data-dateb="{{dateb}}" data-dater="{{dater}}" id="btn-change"><i class="fa fa-address-card" aria-hidden="true" style="font-size: 50px;"></i></a>
             </div>
             <div class="col-lg-5 text-center pt-3">
                 <p>{{name}}</p>
-                <p>Sách cho mượn: {{book}}</p>
+                <p>Số sách cho mượn: {{book.length}}</p>
             </div>
             <div class="col-lg-2 text-center pt-3">
                 <p>Người muợn</p>
@@ -52,10 +25,10 @@
             <div class="col-lg-3" style="display: flex; justify-content: right; align-items: center">
                 <button class="btn btn-outline-warning mr-3 view" data-name="{{name}}"
                 data-username="{{username}}" data-book="{{book}}" data-staff="{{staff}}"
-                data-dateb="{{dateb}}" data-dater="{{dater}}">View</button>
+                data-dateb="{{dateb}}" data-dater="{{dater}}">Xem</button>
                 <button class="btn btn-outline-primary mx-2 edit" data-name="{{name}}"
                 data-username="{{username}}" data-book="{{book}}" data-staff="{{staff}}"
-                data-dateb="{{dateb}}" data-dater="{{dater}}" data-id="{{_id}}">Edit</button>
+                data-dateb="{{dateb}}" data-dater="{{dater}}" data-id="{{_id}}">Sửa</button>
             </div>
         </div>
         {{/each}}   
@@ -72,7 +45,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add new loan book</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Phiếu Mượn</h5>
                         <div type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </div>
@@ -81,32 +54,46 @@
                     <div class="modal-body">
                             <div class="d-flex">
                                 <div class="form-group mx-2">
-                                    <label for="">Username</label>
-                                    <input type="text" placeholder="Username" class="" name="username" required id="username">
+                                    <label for="">Name</label>
+                                    <input type="text" placeholder="Name" name="name" required id="name">
                                 </div>
                                 <div class="form-group mx-2">
-                                    <label for="">Name</label>
-                                    <input type="text" placeholder="Full name" name="name" required id="name">
+                                    <label for="">Username</label>
+                                    <select name="username" id="username" style="width: 150px;">
+                                        <option value="">None</option>
+                                        {{#each account}}
+                                            <option value="{{username}}">{{username}}</option>
+                                        {{/each}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="d-flex">
                                 <div class="form-group mx-2">
                                     <label for="">Name book</label>
-                                    <select name="book" id="book">
+                                    <select name="book1" id="book1">
+                                        <option value="">None</option>
                                         {{#each book}}
                                             <option value="{{name}}">{{name}}</option>
                                         {{/each}}
                                     </select>
                                 </div>
                                 <div class="form-group mx-2">
-                                    <label for="">Quantity</label>
-                                    <select name="quantity" id="quantity">
-                                        
+                                    <label for="">Name book</label>
+                                    <select name="book2" id="book2">
+                                        <option value="">None</option>
+                                        {{#each book}}
+                                            <option value="{{name}}">{{name}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
-                                 <div class="form-group mx-2">
-                                    <label for="">Name Staff</label>
-                                    <input type="text" placeholder="Staff" class="" name="staff" required id="staff" style="padding-right: 0;">
+                                <div class="form-group mx-2">
+                                    <label for="">Name book</label>
+                                    <select name="book3" id="book3">
+                                        <option value="">None</option>
+                                        {{#each book}}
+                                            <option value="{{name}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="d-flex">
@@ -121,16 +108,17 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" value="" name="id_book" id="id_book">
-                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <input type="hidden" value="" name="id_book1" id="id_book1">
+                        <input type="hidden" value="" name="id_book2" id="id_book2">
+                        <input type="hidden" value="" name="id_book3" id="id_book3">
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</div>
+                        <button type="submit" class="btn btn-primary">Tạo</button>
                     </div>
                     </form> 
                 </div>
             </div>
         </div>
 
-    <!-- Confirm delete -->
 <div id="modal-change-status" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -148,8 +136,11 @@
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button data-id= "???" id="btn-delete-confirm" type="button" class="btn btn-danger">Chuyển</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+            <input type= "hidden" id="book1_id" value="">
+            <input type= "hidden" id="book2_id" value="">
+            <input type= "hidden" id="book3_id" value="">
+            <button data-id= "???" data-book="???" data-username="???" type="button" class="btn btn-success btn-finish" >Hoàn Thành</button>
+            <button data-id= "???" data-book="???" data-username="???" type="button" class="btn btn-danger btn-late">Trễ Hạn</button>
         </div>
         
       </div>
@@ -160,7 +151,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add new staff</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Xem Phiếu Mượn</h5>
                         <div type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </div>
@@ -178,9 +169,21 @@
                             </div>
                             <div class="d-flex">
                                 <div class="form-group mx-2">
-                                    <label for="">Name book</label>
-                                    <input readonly value="" type="text" placeholder="Identity" class="" name="book" required id="book-v" style="padding-right: 0;">
+                                    <label for="">Name book 1</label>
+                                    <input readonly value="" type="text" placeholder="None" class="" name="book" required id="book-v1" style="padding-right: 0;">
                                 </div>
+
+                                <div class="form-group mx-2">
+                                    <label for="">Name book 2</label>
+                                    <input readonly value="" type="text" placeholder="None" class="" name="book" required id="book-v2" style="padding-right: 0;">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="form-group mx-2">
+                                    <label for="">Name book 3</label>
+                                    <input readonly value="" type="text" placeholder="None" class="" name="book" required id="book-v3" style="padding-right: 0;">
+                                </div>
+
                                 <div class="form-group mx-2">
                                     <label for="">Name staff</label>
                                     <input readonly value="" type="text" placeholder="Sex" class="" name="staff" required id="staff-v" style="padding-right: 0;">
@@ -198,7 +201,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</div>
                     </div>
                 </div>
             </div>
@@ -208,7 +211,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit staff</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh Sửa Phiếu Mượn</h5>
                         <div type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </div>
@@ -246,8 +249,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
-                        <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Edit</button>
+                        <div type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</div>
+                        <button data-id = "???" type="button" class="btn btn-primary" id="btn-edit-confirm">Chỉnh Sửa</button>
                     </div>
                 </div>
             </div>
@@ -264,10 +267,14 @@
             let staff = item.getAttribute("data-staff")
             let dateb = item.getAttribute("data-dateb")
             let dater = item.getAttribute("data-dater")
+
+            let books = book.split(",")
             
             $('#username-v').val(username)
             $('#name-v').val(name)
-            $('#book-v').val(book)
+            $('#book-v1').val(books[0])
+            $('#book-v2').val(books[1])
+            $('#book-v3').val(books[2])
             $('#staff-v').val(staff)
             $('#dateb-v').val(dateb)
             $('#dater-v').val(dater)
@@ -330,29 +337,287 @@
         .catch(e => console.log(e))
     })
 
-    $('#book').change(()=>{
-        let name = $("#book").val()
-        fetch('http://localhost:3000/staff/changeQuantity', {
-            headers:{
-                'Content-Type':'application/x-www-form-urlencoded'
-            }, 
-            method: 'POST',
-            body: 'name=' + name,
-        })
-        .then(res => res.json())
-        .then(json => {
-            //console.log(json.data[0].quantity)
-            //$('#quantity').val(json.data[0].quantity)
-            let quantity = document.getElementById('quantity')
-            let option = ''
-            for(let i = 1; i <= json.data[0].quantity; i++){
-                option += `<option value="${i}">${i}</option>`
-            }
-            quantity.innerHTML = option
-            //quantity.appendChild(option)
-            console.log(json.data[0]._id)
-            document.getElementById('id_book').value = json.data[0]._id
-        })
-        .catch(e => console.log(e))
+    $('#book1').change(()=>{
+        let name = $("#book1").val()
+        if(name === 'None'){
+            document.getElementById('id_book3').value = 'None'
+        }
+        else{
+            fetch('http://localhost:3000/staff/changeQuantity', {
+                headers:{
+                    'Content-Type':'application/x-www-form-urlencoded'
+                }, 
+                method: 'POST',
+                body: 'name=' + name,
+            })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json.data[0]._id)
+                document.getElementById('id_book1').value = json.data[0]._id
+            })
+            .catch(e => console.log(e))
+        }
+        
     })
+
+    $('#book2').change(()=>{
+        let name = $("#book2").val()
+        if(name === 'None'){
+            document.getElementById('id_book2').value = 'None'
+        }
+        else{
+            fetch('http://localhost:3000/staff/changeQuantity', {
+                headers:{
+                    'Content-Type':'application/x-www-form-urlencoded'
+                }, 
+                method: 'POST',
+                body: 'name=' + name,
+            })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json.data[0]._id)
+                document.getElementById('id_book2').value = json.data[0]._id
+            })
+            .catch(e => console.log(e))
+            }
+    })
+
+    $('#book3').change(()=>{
+        let name = $("#book3").val()
+        if(name === 'None'){
+            document.getElementById('id_book3').value = 'None'
+        }
+        else{
+            fetch('http://localhost:3000/staff/changeQuantity', {
+                headers:{
+                    'Content-Type':'application/x-www-form-urlencoded'
+                }, 
+                method: 'POST',
+                body: 'name=' + name,
+            })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json.data[0]._id)
+                document.getElementById('id_book3').value = json.data[0]._id
+            })
+            .catch(e => console.log(e))
+        }
+    })
+
+    let changes = document.querySelectorAll("#btn-change")
+    changes.forEach(item => {
+        item.onclick = (e) => {
+            let id_c = item.getAttribute("data-id")
+            let book_c = item.getAttribute("data-book")
+            let username_c = item.getAttribute("data-username")
+
+            book_cs = book_c.split(",")
+            console.log(book_cs)
+            
+            $('.btn-finish').attr('data-id', id_c)
+            $('.btn-finish').attr('data-username', username_c)
+            $('.btn-late').attr('data-id', id_c)
+            $('.btn-late').attr('data-book', book_c)
+            $('.btn-late').attr('data-username', username_c)
+            $('.btn-finish').attr('data-book', book_c)
+
+            fetch('/staff/getIdBook', {
+                headers:{
+                    'Content-Type':'application/x-www-form-urlencoded'
+                }, 
+                method: 'POST',
+                body:'book='+ book_cs,
+            })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                if(json.code === 0){
+                    console.log("Lấy id sách thành công")
+                    //window.location.href = '/staff/loan'
+                    if(json.data.length === 3){
+                        document.getElementById('book1_id').value = json.data[0]._id
+                        document.getElementById('book2_id').value = json.data[1]._id
+                        document.getElementById('book3_id').value = json.data[2]._id
+                    }
+                    else if(json.data.length === 2){
+                        document.getElementById('book1_id').value = json.data[0]._id
+                        document.getElementById('book2_id').value = json.data[1]._id
+                        document.getElementById('book3_id').value = ""
+                    }
+                    else{
+                        document.getElementById('book1_id').value = json.data[0]._id
+                        document.getElementById('book2_id').value = ""
+                        document.getElementById('book3_id').value = ""
+                    }
+                }
+            })
+        }
+    })
+
+    let finish = document.querySelectorAll(".btn-finish")
+    finish.forEach(item => {
+        item.onclick = (e) => {
+            let id = item.getAttribute("data-id")
+            let book = item.getAttribute("data-book")
+            let username = item.getAttribute("data-username")
+
+            console.log(id)
+            console.log(book)
+
+            book_cs = book.split(",")
+            console.log(book_cs)
+
+            let arrayId = new Array()
+            if(document.getElementById('book1_id').value !== "")
+            {
+                arrayId.push(document.getElementById('book1_id').value)
+            }
+            if(document.getElementById('book2_id').value !== "")
+            {
+                arrayId.push(document.getElementById('book2_id').value)
+            }
+            if(document.getElementById('book3_id').value !== "")
+            {
+                arrayId.push(document.getElementById('book3_id').value)
+            }
+            
+            if(arrayId.length === 3){
+                fetch('/staff/changeStatusSuccess3book', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&id_book3=' + arrayId[2] + '&username=' + username, 
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    if(json.code === 0){
+                        console.log("Chuyển trạng thái thành công")
+                        window.location.href = '/staff/loan'
+                    }
+                })
+                .catch(e => console.log(e))
+            }
+            else if(arrayId.length === 2){
+                fetch('/staff/changeStatusSuccess2book', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&username=' + username, 
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    if(json.code === 0){
+                        console.log("Chuyển trạng thái thành công")
+                        window.location.href = '/staff/loan'
+                    }
+                })
+                .catch(e => console.log(e))
+            }
+            else{
+                fetch('/staff/changeStatusSuccess1book', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&username=' + username, 
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    if(json.code === 0){
+                        console.log("Chuyển trạng thái thành công")
+                        window.location.href = '/staff/loan'
+                    }
+                })
+                .catch(e => console.log(e))
+            }
+            
+        }
+    }) 
+
+    let late = document.querySelectorAll(".btn-late")
+    late.forEach(item => {
+        item.onclick = (e) => {
+            let id = item.getAttribute("data-id")
+            let book = item.getAttribute("data-book")
+            let username = item.getAttribute("data-username")
+
+            book_cs = book.split(",")
+            console.log(book_cs)
+
+            let arrayId = new Array()
+            if(document.getElementById('book1_id').value !== "")
+            {
+                arrayId.push(document.getElementById('book1_id').value)
+            }
+            if(document.getElementById('book2_id').value !== "")
+            {
+                arrayId.push(document.getElementById('book2_id').value)
+            }
+            if(document.getElementById('book3_id').value !== "")
+            {
+                arrayId.push(document.getElementById('book3_id').value)
+            }
+            
+            if(arrayId.length === 3){
+                fetch('/staff/changeStatusLate3book', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&id_book3=' + arrayId[2] + '&username=' + username, 
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    if(json.code === 0){
+                        console.log("Chuyển trạng thái thành công")
+                        window.location.href = '/staff/loan'
+                    }
+                })
+                .catch(e => console.log(e))
+            }
+            else if(arrayId.length === 2){
+                fetch('/staff/changeStatusLate2book', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&id_book2=' + arrayId[1] + '&username=' + username, 
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    if(json.code === 0){
+                        console.log("Chuyển trạng thái thành công")
+                        window.location.href = '/staff/loan'
+                    }
+                })
+                .catch(e => console.log(e))
+            }
+            else{
+                fetch('/staff/changeStatusLate1book', {
+                    headers:{
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    }, 
+                    method: 'POST',
+                    body:'id=' + id + '&book='+ book + '&id_book1=' + arrayId[0] + '&username=' + username, 
+                })
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    if(json.code === 0){
+                        console.log("Chuyển trạng thái thành công")
+                        window.location.href = '/staff/loan'
+                    }
+                })
+                .catch(e => console.log(e))
+            }
+        }
+    }) 
+
 </script>

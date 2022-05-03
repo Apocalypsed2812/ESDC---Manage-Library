@@ -1,0 +1,78 @@
+<div class="wrapper d-flex align-items-stretch">
+	<nav id="sidebar">
+		<div class="custom-menu">
+			<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	</button>
+</div>
+	<div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
+		<div class="user-logo">
+			<div class="img" style="background-image: url(/images/li.jpg);"></div>
+			<h3>Quản Lý Thư Viện</h3>
+		</div>
+	</div>
+<ul class="list-unstyled components mb-5">
+	<li class="active">
+	<a href="/user/home"><span class="fa fa-home mr-3"></span>Trang Chủ</a>
+	</li>
+	<li>
+	<a href="/user/rule"><span class="fa fa-graduation-cap mr-3"></span>Quy Định</a>
+	</li>
+	<li>
+	<a href="/user/book"><span class="fa fa-book mr-3"></span>Sách</a>
+	</li>
+	<li>
+	<a href="/user/material"><span class="fa fa-file-text-o mr-3"></span>Tài Liệu Giấy</a>
+	</li>
+	<li>
+	<a href="/user/materialE"><span class="fa fa-file-text-o mr-3"></span>Tài Liệu Điện Tử</a>
+	</li>
+	<li>
+	<a href="/user/infor"><span class="fa fa-user mr-3"></span>Thông Tin Cá Nhân</a>
+	</li>
+	<li>
+	<a href="/user/loan"><span class="fa fa-address-card-o mr-3"></span>Phiếu Mượn</a>
+	</li>
+	<li>
+	<a href="/user/comment"><span class="fa fa-comment-o mr-3"></span>Bình Luận</a>
+	</li>
+	<li>
+    <a href="" data-toggle="modal" data-target="#change-password"><span class="fa fa-lock mr-3"></span>Đổi Mật Khẩu</a>
+	</li>
+	<li>
+	<a href="/logout"><span class="fa fa-sign-out mr-3"></span>Đăng Xuất</a>
+	</li>
+</ul>
+
+</nav>
+
+<div class="modal fade" id="change-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Đổi Mật Khẩu</h5>
+				<div type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</div>
+			</div>
+			<form action="/user/change-password" method="post">
+			<div class="modal-body">
+				<div class="d-flex">
+					<div class="form-group">
+						<label for="newPassword">New Password</label>
+						<input type="text" placeholder="New Password" class="" name="newPassword" required id="newPassword">
+					</div>
+					<div class="form-group">
+						<label for="confirmPassword">Confrim Password</label>
+						<input type="text" placeholder="Confirm Password" name="confirmPassword" required id="confirmPassword">
+					</div>	
+				</div>	
+			</div>
+			<div class="modal-footer">
+				<div type="button" class="btn btn-secondary" data-dismiss="modal">Close</div>
+				<button type="submit" class="btn btn-primary">Change</button>
+			</div>
+			</form> 
+		</div>
+	</div>
+</div>

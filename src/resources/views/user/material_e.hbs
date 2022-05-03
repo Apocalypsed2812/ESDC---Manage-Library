@@ -1,0 +1,75 @@
+
+{{> navbar_user}}
+
+	<!-- Page Content  -->
+<div id="content" class="p-4 p-md-5 pt-5">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 mb-3">
+			<h2 class="mb-4">Tài Liệu</h2>
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6 mb-3">
+			<form class="form-inline" style="display: flex; justify-content: right" method="post" action="/user/searchMaterialE">
+				<input name="materialE" class="" type="search" placeholder="Tìm kiếm tài liệu" style="border: 1px solid; margin-right: 10px; border-radius: 4px; width: 200px">
+				<button class="btn btn-primary" type="submit">Tìm</button>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 mb-5">
+			<div class="promotion">
+				<h3 class="product-title col-12 px-0 text-primary pb-2">Tài liệu điện tử</h3>
+				<div id="promotion-row" class="row" style="min-height: 70vh;">
+                    {{#if search}}
+                        <div class="product-item mb-5 col-lg-3 col-sm-6">
+                            <a href="/user/materialE" class="btn btn-outline-primary mb-3">Quay về trang tài liệu</a>
+                            <div class="product-item-image border rounded">
+                                <a href="/material/{{search.slug}}">
+                                    <img src="/images/{{search.image}}" alt="">
+                                </a>	
+                            </div>
+                            <div class="product-item-name">
+                                <p>{{search.name}}</p>
+                            </div>
+                            <div class="product-item-price">
+                                Mô tả: {{search.description}}
+                            </div>
+                            <div class="product-item-price">
+                                Số lượng: {{search.quantity}}
+                            </div>
+                            <div class="product-item-buy">
+                                <a class="btn btn-sm btn-outline-primary w-100 mt-2" href="/user/materialE/{{search.slug}}">Chi Tiết</a>
+                            </div>
+                        </div>
+                    {{else}}
+					{{#each data}}
+					<div class="product-item mb-5 col-lg-3 col-sm-6">
+						<div class="product-item-image border rounded">
+							<a href="/material/{{slug}}">
+								<img src="/images/{{image}}" alt="">
+							</a>	
+						</div>
+						<div class="product-item-name">
+							<p>{{name}}</p>
+						</div>
+						<div class="product-item-price">
+							Mô tả: {{description}}
+						</div>
+						<div class="product-item-price">
+							Số lượng: {{quantity}}
+						</div>
+						<div class="product-item-buy">
+							<a class="btn btn-sm btn-outline-primary w-100 mt-2" href="/user/materialE/{{slug}}">Chi Tiết</a>
+						</div>
+					</div>
+					{{/each}}
+                    {{/if}}
+				</div>
+				 <div class="text-center" style="display: flex; justify-content:center; align-items: center">
+                  <ul class="pagination">
+					  {{{pagination_book_user count page}}}
+                	</ul>   
+                </div>    
+			</div>
+		</div>
+	</div>
+</div>

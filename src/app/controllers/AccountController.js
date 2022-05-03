@@ -99,6 +99,9 @@ class AccountController{
         let password = req.body.password
         let phone = req.body.phone
         let rePassword = req.body.rePassword
+        let identity = req.body.identity
+        let address = req.body.address
+        let credit = 20000
 
 
         if(password.length < 6 || rePassword.length < 6){
@@ -126,6 +129,9 @@ class AccountController{
                 role: "user",
                 password: hashed,
                 phone,
+                identity,
+                address,
+                credit,
             };
             const account = new Account(data);
             await account.save();
@@ -138,3 +144,36 @@ class AccountController{
 }
 
 module.exports = new AccountController
+
+// // [POST] /staff/updateMaterial
+// updateMaterial(req, res){
+//     const form = new multiparty.Form()
+//     form.parse(req, (err, fields, files) => {
+//         if (err) return res.status(500).send(err.message)
+//         // console.log(fields)
+//         // console.log(files)
+//         var oldPath = files.image[0].path
+//         //var oldPathFile = files.file_material[0].path
+//         upload(oldPath, files.image[0].originalFilename)
+//         //upload_file(oldPathFile, files.file_material[0].originalFilename)
+//         let name = fields.name[0]
+//         let quantity = fields.quantity[0]
+//         let description = fields.description[0]
+//         let image = fields.image[0]
+//         Material.findByIdAndUpdate(fields.id[0], {name, quantity, description, image}, {
+//             new: true
+//         })
+//         .then(p => {
+//             if(p){
+//                 return res.json({code: 0, message: "Cập nhật thành công"})
+//             }
+//             else{
+//                 return res.json({code: 2, message: "Không tìm thấy tài liệu để cập nhật"})
+//             }  
+//         })
+//         .catch(e => {
+//             return res.json({code: 3, message: e.message})
+//         })
+//     })
+    
+// }

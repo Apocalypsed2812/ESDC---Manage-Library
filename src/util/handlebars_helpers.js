@@ -1,3 +1,4 @@
+
 const helpers = {
     pagination_book_user: (count, page) => {
         let body = `<li class="page-item"><a class="page-link" href="/user/book?page=${page == 0 ? 0 : page - 1}">Previous</a></li>`
@@ -47,6 +48,28 @@ const helpers = {
         }
         body += `<li class="page-item"><a class="page-link" href="/staff/loan?page=${page == number_page ? number_page : page++}">Next</a></li>`
         return body
+    },
+
+    checkArrayNull: (array) => {
+        if(array[0] === 'null'){
+            return false
+        }
+        return true
+    },
+
+    displayDownload: (category, file) => {
+        let down = ``
+        if(category === 'download'){
+            down += `<a href="/file/${file}" class="btn btn-outline-primary">Tải về tài liệu</a>`
+        }
+        else{
+            down += `<p class="mt-3 text-danger">Bạn không có quyền tải xuống tài liệu này</p>`
+        }
+        return down   
+    },
+
+    checkToast: () => {
+        return 1
     }
 }
 module.exports = helpers

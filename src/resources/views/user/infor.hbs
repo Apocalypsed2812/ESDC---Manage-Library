@@ -1,0 +1,246 @@
+<style>
+    .second-item{
+            background-color: #bebebe;
+            height: 50px;
+        }
+		
+		.second-item p{
+			color: black;
+			font-weight: bold;
+			margin-left: 10px;
+			margin-top: 10px;
+			font-size: 20px;
+        }
+		
+		.card-body button{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		.card-body{
+			display: flex;
+			justify-content: right;	
+		}
+		
+		.card-left{
+			height: 650px;
+			background-color: white;
+		}
+		
+		.leftc{
+			background-color: white;
+			padding: 0;
+		}
+		
+		.top-card{
+			height: 200px;
+		}
+		
+		.content-card{
+			height: 50px;
+			background-color: white;
+			margin-top: 10px;
+		}
+		
+		.search-bar{
+			margin-top: 10px;
+			display: flex;
+			justify-content: center;
+		}
+		
+		.form-outline{
+			max-width: 80%;
+			min-width: 80%;
+		}
+		
+		.nav-item{
+			margin-left: 20px;
+		}
+		
+		.card-info{
+			display: flex;
+			justify-content: center;
+			background-color: white;
+		}
+		
+		.card-block{
+			margin-left: 0px;
+		}
+		
+		.content-body{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		.content-body p{
+			margin-bottom: 0;
+		}
+		
+		.image-body{
+			display: flex;
+			justify-content: center;
+		}
+		
+		
+		.content-body img{
+			max-width: 100%;
+			max-height: 100%;
+		}
+		
+		.content-top{
+			display: flex;
+			justify-content: left;
+			align-items: left;
+			font-size: 30px;
+		}
+		
+		.content-top p{
+			margin-bottom: 0;
+		}
+		
+		.image-top{
+			display: flex;
+			justify-content: center;
+			height: 300px;
+		}
+		
+		.cv-top{
+			display: flex;
+			justify-content: left;
+			color:rgba(143, 142, 142, 0.959)
+		}
+</style>
+
+{{> navbar_user}}
+
+<div id="content" class="p-4 p-md-5 pt-5">
+    <div class="row">
+        <div class="col-lg-9 mt-3">
+            <div class="row">
+					{{#if user}}
+						<div class="col-lg-6 col-md-6 col-sm-6 mt-3">
+						<div class="card card-block">
+							<div class="second-item">
+								<p>Tên</p>
+							</div>
+							<div class="mt-3 image-body">
+								<i class="fa fa-smile-o" style="font-size:48px"></i>
+							</div>
+							<div class="content-body">
+								<p>{{user.name}}</p>
+							</div>
+							<div class="card-body">
+									
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 col-md-6 col-sm-6 mt-3">
+						<div class="card card-block">
+							<div class="second-item">
+								<p>Username</p>
+							</div>
+							<div class="mt-3 image-body">
+								<i class="fa fa-handshake-o" style="font-size:48px"></i>
+							</div>
+							<div class="content-body">
+								<p>{{user.username}}</p>
+							</div>
+							<div class="card-body">
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 mt-3">
+						<div class="card card-block">
+							<div class="second-item">
+								<p>Email</p>
+							</div>
+							<div class="mt-3 image-body">
+								<i class="fa fa-address-card-o" style="font-size:48px"></i>
+							</div>
+							<div class="content-body">
+								<p>{{user.email}}</p>
+							</div>
+							<div class="card-body">
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 mt-3">
+						<div class="card card-block">
+							<div class="second-item">
+								<p>Phone Number</p>
+							</div>
+							<div class="mt-3 image-body">
+								<i class="fa fa-phone" style="font-size:48px"></i>
+							</div>
+							<div class="content-body">
+								<p>{{user.phone}}</p>
+							</div>
+							<div class="card-body">
+
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-lg-6 col-md-6 col-sm-6 mt-3">
+						<div class="card card-block">
+							<div class="second-item">
+								<p>Identity</p>
+							</div>
+							<div class="mt-3 image-body">
+								<i class="fa fa-id-card" style="font-size:48px"></i>
+							</div>
+							<div class="content-body">
+								<p>{{user.identity}}</p>
+							</div>
+							<div class="card-body">
+	
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 col-md-6 col-sm-6 mt-3">
+						<div class="card card-block">
+							<div class="second-item">
+								<p>Address</p>
+							</div>
+							<div class="mt-3 image-body">
+								<i class="fa fa-mars" style="font-size:48px"></i>
+							</div>
+							<div class="content-body">
+								<p>{{user.address}}</p>
+							</div>
+							<div class="card-body">
+				
+							</div>
+						</div>
+					</div>
+
+					
+			</div>
+        </div>
+    <div class="col-lg-3 mt-3">
+        <table cellpadding="10" cellspacing="10" border="0" class="table table-borderless" >
+            <tbody>
+                <tr>
+                    <td>Ảnh đại diện</td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-user-circle-o" style="font-size:200px"></i></td>
+                </tr>
+                <tr class="mt-3">
+                    <td style="font-size: 20px;">Số dư hiện tại</td> 
+                </tr>
+				<tr class="">
+                    <td style="font-size: 20px;">{{user.credit}}</td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+	{{/if}}	
+</div>

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Loan = new Schema({
     name: { type: String },
-    book: { type: String },
+    book: { type: Array, default: [] },
     username: { type: String },
     staff: { type: String },
     dateb: { type: String},

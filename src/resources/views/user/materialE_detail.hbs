@@ -1,0 +1,51 @@
+
+{{> navbar_user}}
+
+        <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+      {{#if material}}
+      <div class="container pt-5">
+              <div class="row">
+
+                  <div class="image--shadow mb-5 col-lg-6 col-md-12">
+                      <img src="/images/{{material.image}}" alt="">
+                  </div>
+          
+                  <div class="detail-info col-lg-6 col-md-12 pl-lg-5">
+                      <h3 class="detail-name">{{material.name}}</h3>
+                      <p>Trạng thái: {{material.status}}</p>
+                      <div class="note p-3 my-3">
+                          <div class="note-text mb-2">
+                              <i class="fa fa-check-circle pt-1"></i>
+                              <p class="pl-2">Đây là tài liệu điện tử</p>
+                          </div>
+                          <div class="note-text mb-2">
+                              <i class="fa fa-check-circle pt-1"></i>
+                              <p class="pl-2">Tải liệu này chỉ có thể xem trên hệ thống bằng mạng nội bộ của thư viện</p>
+                          </div>
+                          <div class="note-text mb-2">
+                              <i class="fa fa-check-circle pt-1"></i>
+                              <p class="pl-2">Có một số tài liệu miễn phí cho phép tải về</p>
+                          </div>
+                          <div class="note-text mb-2">
+                              <i class="fa fa-check-circle pt-1"></i>
+                              <p class="pl-2">Cũng có những tài liệu có bản quyền chỉ có thể xem chứ không được phép tải</p>
+                          </div>
+                      </div>
+                      <div class="quantity mb-3">
+                          <p class="quantity-text mb-3">Số lượng</p>
+                          <input id="quantity" class="quantity-number" type="number" value="{{material.quantity}}" disabled>
+                      </div>
+                  </div>
+              </div>
+          
+              <h3 class="product-title text-primary">Mô tả tài liệu</h3>
+              <p>{{material.description}}</p>
+              <div class="mt-5 text-center">
+                  <a href="/file/{{material.file}}" class="btn btn-outline-success mr-3">Xem Trực Tuyến</a>
+                  {{{displayDownload material.category material.file}}}
+              </div>
+          </div>  
+          {{/if}}      
+    </div>
+

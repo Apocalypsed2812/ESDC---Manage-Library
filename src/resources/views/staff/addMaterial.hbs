@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-6 col-md-8 border rounded my-5 p-4  mx-3">
+            <p class="mb-5"><a href="/staff/material">Quay lại</a></p>
+            <h3 class="text-center text-primary mt-2 mb-3 mb-3">Thêm Tài Liệu</h3>
+            <form method="post" action="/staff/addMaterial" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Tên Tài Liệu</label>
+                    <input value="" name="name" required class="form-control" type="text" placeholder="Name" id="name" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Số lượng</label>
+                    <input value="" name="quantity" required class="form-control" type="number" placeholder="Quantity" id="quantity" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+                </div>
+                <div class="form-group">
+                    <label for="description">Mô tả</label>
+                    <textarea id="description" name="description" cols="30" rows="6"  class="form-control" placeholder="Mô tả" style="border: 1px solid rgba(0, 0, 0, 0.171); height: 100px !important"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="description">Loại Tài Liệu</label>
+                    <select name="categoryMaterial" id="categoryMaterial">
+                        <option value="paper">Tài liệu giấy</option>
+                        <option value="ebook">Tài liệu điện tử</option>
+                    </select>
+                </div>  
+                <div class="form-group">
+                    <label for="image" class="">Ảnh minh họa</label>
+                    <input type="file" class="form-control" required accept="image/*" id="image" name="image" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary px-5 mr-2">Thêm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

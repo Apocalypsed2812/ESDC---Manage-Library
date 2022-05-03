@@ -1,35 +1,5 @@
 
-		<div class="wrapper d-flex align-items-stretch">
-			<nav id="sidebar">
-				<div class="custom-menu">
-					<button type="button" id="sidebarCollapse" class="btn btn-primary">
-	        </button>
-        </div>
-	  		<div class="img bg-wrap text-center py-4" style="background-image: url(/images/bg_1.jpg);">
-	  			<div class="user-logo">
-	  				<div class="img" style="background-image: url(/images/li.jpg);"></div>
-	  				<h3>Library Management</h3>
-	  			</div>
-	  		</div>
-        <ul class="list-unstyled components mb-5">
-          <li class="active">
-          <a href="/staff/home"><span class="fa fa-home mr-3"></span> Home</a>
-          </li>
-          <li>
-          <a href="/staff/book"><span class="fa fa-book mr-3"></span>Book</a>
-          </li>
-          <li>
-          <a href="/staff/loan"><span class="fa fa-address-card-o mr-3"></span>Loan</a>
-          </li>
-          <li>
-          <a href="/staff/statistic"><span class="fa fa-handshake-o mr-3"></span>Statistic</a>
-          </li>
-          <li>
-          <a href="/logout"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
-          </li>
-        </ul>
-
-    	</nav>
+    {{> navbar_staff}}
 
       <div id="content" class="p-4 p-md-5 pt-5">
       {{#if book}}
@@ -62,8 +32,13 @@
                       <div class="detail-buy">
                         <div class="row">
                             <div class="col-lg-12">
-                                <button onclick="" class="btn btn-outline-danger px-5 py-3 mb-3 btn-delete" data-id="{{book._id}}" data-name="{{book.name}}">
-                                    <span><i class="fa fa-trash mr-1"></i></span> Xóa sách
+                                <button onclick="" class="btn btn-outline-info px-5 py-3 mb-3 btn-image" data-id="{{book._id}}">
+                                    <span><i class="fa fa-history mr-1"></i></span> Đổi ảnh
+                                </button>
+                            </div>
+                            <div class="col-lg-12">
+                                <button data-id="{{book._id}}" class="btn btn-outline-danger px-5 py-3 mb-3 btn-change" data-id="{{book._id}}" data-name="{{book.name}}">
+                                    <span><i class="fa fa-history mr-1"></i></span> Chuyển trạng thái
                                 </button>
                             </div>
                             <div class="col-lg-12">
@@ -95,12 +70,12 @@
         
         <!-- Modal body -->
         <div class="modal-body">
-          Bạn có chắc rằng muốn xóa sách <strong id="delete-name"></strong>?
+          Bạn có chắc rằng muốn chuyển trạng thái sách <strong id="delete-name"></strong>?
         </div>
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button data-id= "???" id="btn-delete-confirm" type="button" class="btn btn-danger">Xóa</button>
+          <button data-id= "???" id="btn-delete-confirm" type="button" class="btn btn-danger">Chuyển</button>
           <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
         </div>
         
@@ -122,24 +97,16 @@
         <!-- Modal body -->
         <div class="modal-body">
              <div class="form-group">
-                <label for="name">Tên sách</label>
-                <input value="{{book.name}}" name="name" required class="form-control" type="text" placeholder="Name" id="name" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+                <label for="name">Tên tài liệu</label>
+                <input value="" name="name" required class="form-control" type="text" placeholder="Name" id="name_e" style="border: 1px solid rgba(0, 0, 0, 0.171)">
             </div>
             <div class="form-group">
                 <label for="quantity">Số lượng</label>
-                <input value="{{book.quantity}}" name="quantity" required class="form-control" type="number" placeholder="Quantity" id="quantity" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+                <input value="" name="quantity" required class="form-control" type="number" placeholder="Quantity" id="quantity_e" style="border: 1px solid rgba(0, 0, 0, 0.171)">
             </div>
             <div class="form-group">
-                <label for="description">Mô tả</label>
-                <textarea id="description" name="description" cols="30" rows="6"  class="form-control" placeholder="Mô tả" style="border: 1px solid rgba(0, 0, 0, 0.171); height: 100px !important">{{book.description}}</textarea>
-            </div>  
-            <div class="form-group">
-                <label for="slug">Đường dẫn</label>
-                    <input value="{{book.slug}}" name="slug" required class="form-control" type="text" placeholder="Slug" id="slug" style="border: 1px solid rgba(0, 0, 0, 0.171)">
-            </div>  
-            <div class="form-group">
-                <label for="image" class="">Ảnh minh họa</label>
-                <input value = "{{book.image}}" type="file" class="form-control" required accept="image/*" id="image" name="image" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+                <label for="quantity">Mô tả</label>
+                <input value="" name="description" required class="form-control" type="text" placeholder="Quantity" id="description_e" style="border: 1px solid rgba(0, 0, 0, 0.171)">
             </div>
         </div>
         
@@ -154,85 +121,105 @@
   </div>
 <!-- End Update user -->
 
+<div id="confirm-image-dialog" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <form action="/staff/bookImage" method="POST" enctype="multipart/form-data">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Thay đổi ảnh sách</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="image" class="">Ảnh minh họa</label>
+                <input value = "" type="file" class="form-control" required accept="image/*" id="image_e" name="image" style="border: 1px solid rgba(0, 0, 0, 0.171)">
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+           <input type="hidden" name="id" id="id">
+          <button type="submit" class="btn btn-success" id="btn-image-confirm">Đổi</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Đóng</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<div id="modal-change-status" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Chuyển trạng thái</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Bạn có chắc rằng muốn chuyển trạng thái <strong id="delete-name"></strong>?
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button data-id= "???" type="button" class="btn btn-success" id="btn-change-confirm" >Vẫn Còn</button>
+            <button data-id= "???" type="button" class="btn btn-danger" id="btn-change-confirm-end">Đã Hết</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
 <script>
-    $('.btn-delete').click(e => {
-        const btn = e.target
-        const id = btn.dataset.id
-        const name = btn.dataset.name
+    let edits = document.querySelectorAll(".btn-edit")
+    edits.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id_e = item.getAttribute("data-id")
+            let name_e = item.getAttribute("data-name")
+            let quantity_e = item.getAttribute("data-quantity")
+            let description_e = item.getAttribute("data-description")
 
-        console.log(id)
-        console.log(name)
+            console.log(name_e)
+            console.log(quantity_e)
+            console.log(description_e)
 
+        
+            $('#name_e').val(name_e)
+            $('#quantity_e').val(quantity_e)
+            $('#description_e').val(description_e)
+            
+        
+
+            $('#btn-edit-confirm').attr('data-id', id_e)
     
-        $('#btn-delete-confirm').attr('data-id', id)
-        $('#delete-name').html(name)
-        $('#confirm-delete-dialog').modal('show')
-    })
-
-    $('#btn-delete-confirm').click(e => {
-        $('#confirm-delete-dialog').modal('hide')
-        const btn = e.target
-        const id = btn.dataset.id
-
-        fetch('/staff/delete/' + id, {
-            method: 'DELETE'
-        })
-        .then(res => res.json())
-        .then(json => {
-            if(json.code === 0){
-                console.log("Xóa thành công")
-                window.location.href = '/staff/book'
-            }
-        })
-        .catch(e => console.log(e))
-    }) 
-
-    $('.btn-edit').click(e => {
-        const btn = e.target
-        const id = btn.dataset.id
-        const name = btn.dataset.name
-        const quantity= btn.dataset.quantity
-        const description = btn.dataset.description
-        const slug = btn.dataset.slug
-        const image = btn.dataset.image
-
-        /*$('#name').val(name)
-        $('#quantity').val(2)
-        $('#description').val(description)
-        $('#slug').val(slug)
-        //$('#image').val(image)*/
-
-        console.log(id)
-        console.log(name)
-        console.log(quantity)
-        console.log(description)
-        console.log(slug)
-        console.log(image)
-
-        $('#btn-edit-confirm').attr('data-id', id)
-        $('#confirm-edit-dialog').modal('show')
-
+            $('#confirm-edit-dialog').modal('show')
+        }
     })
 
     $('#btn-edit-confirm').click(e => {
         $('#confirm-edit-dialog').modal('hide')
         const btn = e.target
         let id = btn.dataset.id
-        let name = $('#name').val()
-        let quantity = $('#quantity').val()
-        let description = $('#description').val()
-        let slug = $('#slug').val()
-        let image = $('#image').val()
+        let name = $('#name_e').val()
+        let quantity = $('#quantity_e').val()
+        let description = $('#description_e').val()
 
-        console.log(image)
+        console.log(name)
+        console.log(quantity)
+        console.log(description)
         
-
         fetch('/staff/update', {
             headers:{
                 'Content-Type':'application/x-www-form-urlencoded'
             }, 
             method: 'POST',
-            body:'id='+ id + '&name=' + name + '&quantity=' + quantity + '&description=' + description + '&slug=' + slug + '&image=' + image,
+            body:'id='+ id + '&name=' + name + '&quantity=' + quantity + '&description=' + description,
         })
         .then(res => res.json())
         .then(json => {
@@ -243,4 +230,76 @@
         })
         .catch(e => console.log(e))
     })
+
+    let images = document.querySelectorAll(".btn-image")
+    images.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id_i = item.getAttribute("data-id")
+
+            $('#id').val(id_i)
+    
+            $('#confirm-image-dialog').modal('show')
+        }
+    })
+
+    let changes = document.querySelectorAll(".btn-change")
+    changes.forEach(item => {
+        item.onclick = (e) => {
+            console.log(item)
+            let id_c = item.getAttribute("data-id")
+
+            $('#btn-change-confirm').attr('data-id', id_c)
+            $('#btn-change-confirm-end').attr('data-id', id_c)
+    
+            $('#modal-change-status').modal('show')
+        }
+    })
+
+    $('#btn-change-confirm').click(e => {
+        $('#modal-change-status').modal('hide')
+        const btn = e.target
+        let id = btn.dataset.id
+        
+        fetch('/staff/changeStatusBookStill', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'id='+ id,
+        })
+        .then(res => res.json())
+        .then(json => {
+            if(json.code === 0){
+                console.log("Cập nhật thành công")
+                window.location.href = '/staff/book'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+
+    $('#btn-change-confirm-end').click(e => {
+        $('#modal-change-status').modal('hide')
+        const btn = e.target
+        let id = btn.dataset.id
+
+        console.log(id)
+        
+        fetch('/staff/changeStatusBookEnd', {
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            }, 
+            method: 'POST',
+            body:'id='+ id,
+        })
+        .then(res => res.json())
+        .then(json => {
+            if(json.code === 0){
+                console.log("Cập nhật thành công")
+                window.location.href = '/staff/book'
+            }
+        })
+        .catch(e => console.log(e))
+    })
+    
 </script>
